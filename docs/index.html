@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pushwoosh NoCode SDK Builder</title>
-    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <title>Pushwoosh NoCode Builder</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f1117;
-            color: #e1e4e8;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background: #0d1117;
+            color: #e6edf3;
+            min-height: 100vh;
         }
 
+        /* Header */
         header {
             background: #161b22;
             border-bottom: 1px solid #30363d;
-            padding: 12px 24px;
+            padding: 16px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-shrink: 0;
         }
 
         .logo {
@@ -34,20 +31,20 @@
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #2ea44f;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #2ea44f, #3fb950);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
+            font-weight: 700;
+            font-size: 20px;
             color: white;
         }
 
         .logo h1 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
         }
 
@@ -56,23 +53,253 @@
             font-weight: 400;
         }
 
-        .actions {
+        /* Steps indicator */
+        .steps {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 32px 32px 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        .step-item.active { opacity: 1; }
+        .step-item.done { opacity: 0.7; }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-item.active .step-num {
+            background: #2ea44f;
+        }
+
+        .step-item.done .step-num {
+            background: #2ea44f;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .step-line {
+            width: 60px;
+            height: 2px;
+            background: #30363d;
+            margin: 0 12px;
+            flex-shrink: 0;
+        }
+
+        .step-line.done { background: #2ea44f; }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .step-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-subtitle {
+            font-size: 16px;
+            color: #8b949e;
+            margin-bottom: 32px;
+        }
+
+        /* Feature cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            border-color: #484f58;
+        }
+
+        .feature-card.selected {
+            border-color: #2ea44f;
+            background: #0d1f0d;
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .feature-toggle {
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
+            background: #30363d;
+            position: relative;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .feature-toggle::after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #8b949e;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: all 0.2s;
+        }
+
+        .feature-card.selected .feature-toggle {
+            background: #2ea44f;
+        }
+
+        .feature-card.selected .feature-toggle::after {
+            background: white;
+            left: 23px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: #8b949e;
+            line-height: 1.4;
+        }
+
+        /* Configure fields */
+        .config-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .config-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
+        .config-section .badge {
+            font-size: 11px;
+            background: #30363d;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: #8b949e;
+            font-weight: 400;
+        }
+
+        .field-group {
+            margin-bottom: 16px;
+        }
+
+        .field-group:last-child { margin-bottom: 0; }
+
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            color: #8b949e;
+            margin-bottom: 6px;
+        }
+
+        .field-group input, .field-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #e6edf3;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .field-group input:focus, .field-group select:focus {
+            border-color: #2ea44f;
+        }
+
+        .field-group input::placeholder {
+            color: #484f58;
+        }
+
+        .field-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .field-row .field-group { flex: 1; }
+
+        .no-config-msg {
+            text-align: center;
+            padding: 40px;
+            color: #484f58;
+            font-size: 15px;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+
         .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 8px;
             border: 1px solid #30363d;
             background: #21262d;
-            color: #e1e4e8;
-            font-size: 14px;
+            color: #e6edf3;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background 0.15s;
+            transition: all 0.15s;
+            font-family: inherit;
         }
 
         .btn:hover { background: #30363d; }
@@ -85,156 +312,652 @@
 
         .btn-primary:hover { background: #3fb950; }
 
-        .btn-blue {
-            background: #1f6feb;
-            border-color: #1f6feb;
-            color: white;
+        .btn-large {
+            padding: 16px 48px;
+            font-size: 18px;
+            border-radius: 12px;
         }
 
-        .btn-blue:hover { background: #388bfd; }
-
-        .main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        #blocklyDiv {
-            flex: 1;
-        }
-
-        .sidebar {
-            width: 420px;
-            background: #161b22;
-            border-left: 1px solid #30363d;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-        }
-
-        .sidebar-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-header h2 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .tab-buttons {
+        /* Step 3 — Result */
+        .result-tabs {
             display: flex;
             gap: 4px;
+            margin-bottom: 16px;
         }
 
-        .tab-btn {
-            padding: 4px 10px;
-            border-radius: 4px;
+        .result-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
             border: none;
-            background: transparent;
+            background: #21262d;
             color: #8b949e;
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
         }
 
-        .tab-btn.active {
+        .result-tab.active {
             background: #30363d;
-            color: #e1e4e8;
+            color: #e6edf3;
         }
 
-        .code-output {
-            flex: 1;
-            overflow: auto;
-            padding: 16px;
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            margin-bottom: 24px;
         }
 
-        pre {
-            font-family: 'SF Mono', 'Fira Code', monospace;
+        .code-block pre {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
             white-space: pre-wrap;
             word-break: break-word;
             color: #c9d1d9;
+            margin: 0;
         }
 
-        .status-bar {
-            padding: 8px 16px;
-            border-top: 1px solid #30363d;
-            font-size: 12px;
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            background: #21262d;
             color: #8b949e;
-            display: flex;
-            justify-content: space-between;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
         }
 
-        /* Toast notification */
+        .copy-btn:hover { background: #30363d; color: #e6edf3; }
+
+        .download-area {
+            text-align: center;
+            padding: 32px;
+            background: #161b22;
+            border: 2px dashed #30363d;
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .download-area h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .download-area p {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Integration guide */
+        .guide {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .guide h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .guide-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .guide-step:last-child { margin-bottom: 0; }
+
+        .guide-step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #2ea44f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .guide-step-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .guide-step-content p {
+            font-size: 13px;
+            color: #8b949e;
+            line-height: 1.5;
+        }
+
+        .guide-step-content code {
+            background: #0d1117;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', monospace;
+            font-size: 12px;
+            color: #79c0ff;
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 60px;
-            right: 20px;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
             background: #2ea44f;
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-size: 14px;
+            font-weight: 500;
             opacity: 0;
-            transform: translateY(10px);
             transition: all 0.3s;
             z-index: 1000;
+            pointer-events: none;
         }
 
         .toast.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* Blockly theme overrides */
-        .blocklyMainBackground { fill: #0f1117 !important; }
-        .blocklyToolboxDiv { background: #161b22 !important; }
-        .blocklyTreeRow { color: #e1e4e8 !important; }
-        .blocklyFlyoutBackground { fill: #21262d !important; }
+        /* Page hidden */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state p {
+            color: #484f58;
+            font-size: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .container { padding: 20px; }
+            .steps { padding: 20px 20px 0; }
+            .step-label { display: none; }
+            .field-row { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <div class="logo-icon">P</div>
-            <h1>Pushwoosh <span>NoCode Builder</span></h1>
-        </div>
-        <div class="actions">
-            <button class="btn" onclick="clearWorkspace()">Clear</button>
-            <button class="btn btn-blue" onclick="copyJSON()">Copy JSON</button>
-            <button class="btn btn-primary" onclick="downloadJSON()">Download JSON</button>
-        </div>
-    </header>
 
-    <div class="main">
-        <div id="blocklyDiv"></div>
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>Generated Config</h2>
-                <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="switchTab('json', this)">JSON</button>
-                    <button class="tab-btn" onclick="switchTab('swift', this)">Swift</button>
-                </div>
+<header>
+    <div class="logo">
+        <div class="logo-icon">P</div>
+        <h1>Pushwoosh <span>NoCode Builder</span></h1>
+    </div>
+</header>
+
+<div class="steps">
+    <div class="step-item active" id="stepInd1" onclick="goToStep(1)">
+        <div class="step-num">1</div>
+        <div class="step-label">Choose Features</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-item" id="stepInd2" onclick="goToStep(2)">
+        <div class="step-num">2</div>
+        <div class="step-label">Configure</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-item" id="stepInd3" onclick="goToStep(3)">
+        <div class="step-num">3</div>
+        <div class="step-label">Get Config</div>
+    </div>
+</div>
+
+<!-- STEP 1: Choose Features -->
+<div class="container page active" id="page1">
+    <h2 class="step-title">What do you need?</h2>
+    <p class="step-subtitle">Select the features you want to use. You can always change this later.</p>
+
+    <div class="features-grid">
+        <div class="feature-card selected" data-feature="push" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Push Notifications</h3>
+                <div class="feature-toggle"></div>
             </div>
-            <div class="code-output">
-                <pre id="codeOutput">// Drag blocks to build your config</pre>
+            <p>Register device for push notifications and request permission from the user.</p>
+        </div>
+
+        <div class="feature-card" data-feature="userId" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>User ID</h3>
+                <div class="feature-toggle"></div>
             </div>
-            <div class="status-bar">
-                <span id="actionCount">0 actions</span>
-                <span>pushwoosh-nocode.json</span>
+            <p>Identify users by their ID for targeted push notifications.</p>
+        </div>
+
+        <div class="feature-card" data-feature="email" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Email</h3>
+                <div class="feature-toggle"></div>
+            </div>
+            <p>Set user email for email campaigns and segmentation.</p>
+        </div>
+
+        <div class="feature-card" data-feature="tags" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Tags</h3>
+                <div class="feature-toggle"></div>
+            </div>
+            <p>Set custom tags for user segmentation and personalization.</p>
+        </div>
+
+        <div class="feature-card" data-feature="language" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Language</h3>
+                <div class="feature-toggle"></div>
+            </div>
+            <p>Override device language for localized push notifications.</p>
+        </div>
+
+        <div class="feature-card" data-feature="communication" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Communication</h3>
+                <div class="feature-toggle"></div>
+            </div>
+            <p>Control when the SDK starts or stops talking to the server.</p>
+        </div>
+
+        <div class="feature-card" data-feature="proxy" onclick="toggleFeature(this)">
+            <div class="feature-card-header">
+                <h3>Reverse Proxy</h3>
+                <div class="feature-toggle"></div>
+            </div>
+            <p>Route all SDK traffic through your own server for compliance.</p>
+        </div>
+    </div>
+
+    <div class="btn-row">
+        <div></div>
+        <button class="btn btn-primary" onclick="goToStep(2)">Next: Configure</button>
+    </div>
+</div>
+
+<!-- STEP 2: Configure -->
+<div class="container page" id="page2">
+    <h2 class="step-title">Configure</h2>
+    <p class="step-subtitle">Fill in the values for your selected features.</p>
+
+    <div id="configSections"></div>
+
+    <div class="btn-row">
+        <button class="btn" onclick="goToStep(1)">Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Next: Get Config</button>
+    </div>
+</div>
+
+<!-- STEP 3: Get Config -->
+<div class="container page" id="page3">
+    <h2 class="step-title">Your config is ready</h2>
+    <p class="step-subtitle">Download the JSON file and add it to your app.</p>
+
+    <div class="download-area">
+        <h3>pushwoosh-nocode.json</h3>
+        <p>Add this file to your Xcode project's main bundle</p>
+        <button class="btn btn-primary btn-large" onclick="downloadJSON()">Download JSON</button>
+    </div>
+
+    <div class="result-tabs">
+        <button class="result-tab active" onclick="switchResultTab('json', this)">JSON</button>
+        <button class="result-tab" onclick="switchResultTab('swift', this)">Swift</button>
+    </div>
+
+    <div class="code-block">
+        <button class="copy-btn" onclick="copyCode()">Copy</button>
+        <pre id="codeOutput"></pre>
+    </div>
+
+    <div class="guide">
+        <h3>Integration Guide</h3>
+        <div class="guide-step">
+            <div class="guide-step-num">1</div>
+            <div class="guide-step-content">
+                <h4>Add Pushwoosh SDK</h4>
+                <p>Add <code>PushwooshXCFramework</code> and <code>PushwooshXCFramework/PushwooshNoCode</code> via CocoaPods, or link frameworks manually.</p>
+            </div>
+        </div>
+        <div class="guide-step">
+            <div class="guide-step-num">2</div>
+            <div class="guide-step-content">
+                <h4>Add JSON to your project</h4>
+                <p>Drag <code>pushwoosh-nocode.json</code> into Xcode. Make sure "Copy items if needed" and your app target are checked.</p>
+            </div>
+        </div>
+        <div class="guide-step">
+            <div class="guide-step-num">3</div>
+            <div class="guide-step-content">
+                <h4>Set your App ID</h4>
+                <p>Add <code>Pushwoosh_APPID</code> key to your app's <code>Info.plist</code> with your Pushwoosh Application Code.</p>
+            </div>
+        </div>
+        <div class="guide-step">
+            <div class="guide-step-num">4</div>
+            <div class="guide-step-content">
+                <h4>Enable Push in Xcode</h4>
+                <p>Go to your target's Signing & Capabilities, click "+ Capability" and add "Push Notifications".</p>
+            </div>
+        </div>
+        <div class="guide-step">
+            <div class="guide-step-num">5</div>
+            <div class="guide-step-content">
+                <h4>Build & Run</h4>
+                <p>That's it! The SDK reads the JSON on launch and executes all actions automatically. Zero code needed.</p>
             </div>
         </div>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <div class="btn-row">
+        <button class="btn" onclick="goToStep(2)">Back</button>
+        <button class="btn btn-primary" onclick="downloadJSON()">Download JSON</button>
+    </div>
+</div>
 
-    <script src="blocks.js"></script>
-    <script src="generators.js"></script>
-    <script src="app.js"></script>
+<div class="toast" id="toast"></div>
+
+<script>
+let currentStep = 1;
+let resultTab = 'json';
+
+const features = {
+    push: { enabled: true },
+    userId: { enabled: false, value: '' },
+    email: { enabled: false, value: '' },
+    tags: { enabled: false, tags: [{ key: '', value: '' }] },
+    language: { enabled: false, value: 'en' },
+    communication: { enabled: false, mode: 'start' },
+    proxy: { enabled: false, value: '' }
+};
+
+function toggleFeature(card) {
+    const f = card.dataset.feature;
+    features[f].enabled = !features[f].enabled;
+    card.classList.toggle('selected');
+}
+
+function goToStep(step) {
+    currentStep = step;
+
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + step).classList.add('active');
+
+    for (let i = 1; i <= 3; i++) {
+        const ind = document.getElementById('stepInd' + i);
+        ind.classList.remove('active', 'done');
+        if (i < step) ind.classList.add('done');
+        if (i === step) ind.classList.add('active');
+    }
+    document.getElementById('line1').classList.toggle('done', step >= 2);
+    document.getElementById('line2').classList.toggle('done', step >= 3);
+
+    if (step === 2) buildConfigUI();
+    if (step === 3) renderOutput();
+
+    window.scrollTo(0, 0);
+}
+
+function buildConfigUI() {
+    const container = document.getElementById('configSections');
+    container.innerHTML = '';
+
+    const hasAny = Object.values(features).some(f => f.enabled && f !== features.push);
+    const onlyPush = features.push.enabled && !hasAny;
+
+    if (onlyPush || !Object.values(features).some(f => f.enabled)) {
+        if (features.push.enabled) {
+            container.innerHTML = '<div class="config-section"><p style="color:#8b949e;text-align:center;padding:20px 0;">Push Notifications requires no configuration. Click Next to get your config.</p></div>';
+        } else {
+            container.innerHTML = '<div class="no-config-msg">No features selected. Go back and select at least one.</div>';
+        }
+        return;
+    }
+
+    if (features.userId.enabled) {
+        container.innerHTML += `
+        <div class="config-section">
+            <h3>User ID <span class="badge">optional value</span></h3>
+            <div class="field-group">
+                <label>Default User ID (leave empty to set at runtime)</label>
+                <input type="text" placeholder="e.g. user_123" value="${features.userId.value}" oninput="features.userId.value=this.value">
+            </div>
+        </div>`;
+    }
+
+    if (features.email.enabled) {
+        container.innerHTML += `
+        <div class="config-section">
+            <h3>Email <span class="badge">optional value</span></h3>
+            <div class="field-group">
+                <label>Default Email (leave empty to set at runtime)</label>
+                <input type="email" placeholder="e.g. user@example.com" value="${features.email.value}" oninput="features.email.value=this.value">
+            </div>
+        </div>`;
+    }
+
+    if (features.tags.enabled) {
+        let tagsHTML = `<div class="config-section" id="tagsSection">
+            <h3>Tags</h3>`;
+        features.tags.tags.forEach((t, i) => {
+            tagsHTML += `
+            <div class="field-row" style="margin-bottom:12px;">
+                <div class="field-group">
+                    <label>Tag Name</label>
+                    <input type="text" placeholder="e.g. category" value="${t.key}" oninput="features.tags.tags[${i}].key=this.value">
+                </div>
+                <div class="field-group">
+                    <label>Tag Value</label>
+                    <input type="text" placeholder="e.g. premium" value="${t.value}" oninput="features.tags.tags[${i}].value=this.value">
+                </div>
+            </div>`;
+        });
+        tagsHTML += `<button class="btn" onclick="addTag()" style="margin-top:4px;">+ Add Tag</button></div>`;
+        container.innerHTML += tagsHTML;
+    }
+
+    if (features.language.enabled) {
+        container.innerHTML += `
+        <div class="config-section">
+            <h3>Language</h3>
+            <div class="field-group">
+                <label>Device Language Override</label>
+                <select onchange="features.language.value=this.value">
+                    <option value="en" ${features.language.value === 'en' ? 'selected' : ''}>English (en)</option>
+                    <option value="es" ${features.language.value === 'es' ? 'selected' : ''}>Spanish (es)</option>
+                    <option value="fr" ${features.language.value === 'fr' ? 'selected' : ''}>French (fr)</option>
+                    <option value="de" ${features.language.value === 'de' ? 'selected' : ''}>German (de)</option>
+                    <option value="pt" ${features.language.value === 'pt' ? 'selected' : ''}>Portuguese (pt)</option>
+                    <option value="ru" ${features.language.value === 'ru' ? 'selected' : ''}>Russian (ru)</option>
+                    <option value="zh" ${features.language.value === 'zh' ? 'selected' : ''}>Chinese (zh)</option>
+                    <option value="ja" ${features.language.value === 'ja' ? 'selected' : ''}>Japanese (ja)</option>
+                    <option value="ko" ${features.language.value === 'ko' ? 'selected' : ''}>Korean (ko)</option>
+                    <option value="ar" ${features.language.value === 'ar' ? 'selected' : ''}>Arabic (ar)</option>
+                </select>
+            </div>
+        </div>`;
+    }
+
+    if (features.communication.enabled) {
+        container.innerHTML += `
+        <div class="config-section">
+            <h3>Communication</h3>
+            <div class="field-group">
+                <label>On app start</label>
+                <select onchange="features.communication.mode=this.value">
+                    <option value="start" ${features.communication.mode === 'start' ? 'selected' : ''}>Start server communication</option>
+                    <option value="stop" ${features.communication.mode === 'stop' ? 'selected' : ''}>Stop server communication</option>
+                </select>
+            </div>
+        </div>`;
+    }
+
+    if (features.proxy.enabled) {
+        container.innerHTML += `
+        <div class="config-section">
+            <h3>Reverse Proxy</h3>
+            <div class="field-group">
+                <label>Proxy URL</label>
+                <input type="url" placeholder="https://proxy.example.com" value="${features.proxy.value}" oninput="features.proxy.value=this.value">
+            </div>
+        </div>`;
+    }
+}
+
+function addTag() {
+    features.tags.tags.push({ key: '', value: '' });
+    buildConfigUI();
+}
+
+function generateConfig() {
+    const config = { version: 1, onAppStart: [] };
+
+    if (features.push.enabled) {
+        config.onAppStart.push({ type: 'registerForPushNotifications' });
+    }
+
+    if (features.userId.enabled && features.userId.value) {
+        config.onAppStart.push({ type: 'setUserId', value: features.userId.value });
+    }
+
+    if (features.email.enabled && features.email.value) {
+        config.onAppStart.push({ type: 'setEmail', value: features.email.value });
+    }
+
+    if (features.tags.enabled) {
+        for (const t of features.tags.tags) {
+            if (t.key && t.value) {
+                config.onAppStart.push({ type: 'setTags', tags: { [t.key]: t.value } });
+            }
+        }
+    }
+
+    if (features.language.enabled) {
+        config.onAppStart.push({ type: 'setLanguage', value: features.language.value });
+    }
+
+    if (features.communication.enabled) {
+        config.onAppStart.push({
+            type: features.communication.mode === 'start' ? 'startCommunication' : 'stopCommunication'
+        });
+    }
+
+    if (features.proxy.enabled && features.proxy.value) {
+        config.onAppStart.push({ type: 'setReverseProxy', value: features.proxy.value });
+    }
+
+    return config;
+}
+
+function generateSwift(config) {
+    const lines = [
+        '// AppDelegate.swift',
+        '// Generated by Pushwoosh NoCode Builder',
+        '',
+        'import PushwooshFramework',
+        '',
+        'func application(_ application: UIApplication,',
+        '                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {'
+    ];
+
+    for (const a of config.onAppStart) {
+        switch (a.type) {
+            case 'registerForPushNotifications':
+                lines.push('    Pushwoosh.configure.registerForPushNotifications()');
+                break;
+            case 'setUserId':
+                lines.push(`    Pushwoosh.configure.setUserId("${a.value}")`);
+                break;
+            case 'setEmail':
+                lines.push(`    Pushwoosh.configure.setEmail("${a.value}")`);
+                break;
+            case 'setTags': {
+                const entries = Object.entries(a.tags).map(([k, v]) => `"${k}": "${v}"`).join(', ');
+                lines.push(`    Pushwoosh.configure.setTags([${entries}])`);
+                break;
+            }
+            case 'setLanguage':
+                lines.push(`    Pushwoosh.configure.setLanguage("${a.value}")`);
+                break;
+            case 'startCommunication':
+                lines.push('    Pushwoosh.configure.startServerCommunication()');
+                break;
+            case 'stopCommunication':
+                lines.push('    Pushwoosh.configure.stopServerCommunication()');
+                break;
+            case 'setReverseProxy':
+                lines.push(`    Pushwoosh.configure.setReverseProxy("${a.value}")`);
+                break;
+        }
+    }
+
+    lines.push('    return true');
+    lines.push('}');
+    return lines.join('\n');
+}
+
+function renderOutput() {
+    const config = generateConfig();
+    const el = document.getElementById('codeOutput');
+    if (resultTab === 'json') {
+        el.textContent = JSON.stringify(config, null, 2);
+    } else {
+        el.textContent = generateSwift(config);
+    }
+}
+
+function switchResultTab(tab, btn) {
+    resultTab = tab;
+    document.querySelectorAll('.result-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderOutput();
+}
+
+function copyCode() {
+    const text = document.getElementById('codeOutput').textContent;
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+}
+
+function downloadJSON() {
+    const config = generateConfig();
+    const json = JSON.stringify(config, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pushwoosh-nocode.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Downloaded pushwoosh-nocode.json');
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+</script>
+
 </body>
 </html>
-<!-- deployed Sat Mar 14 23:27:20 CET 2026 -->
