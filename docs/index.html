@@ -11,291 +11,56 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0d1117;
             color: #e6edf3;
-            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none;
         }
 
         /* Header */
         header {
             background: #161b22;
             border-bottom: 1px solid #30363d;
-            padding: 16px 32px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 10;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: linear-gradient(135deg, #2ea44f, #3fb950);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 18px;
             color: white;
         }
 
-        .logo h1 {
-            font-size: 20px;
-            font-weight: 600;
-        }
+        .logo h1 { font-size: 17px; font-weight: 600; }
+        .logo h1 span { color: #8b949e; font-weight: 400; }
 
-        .logo h1 span {
-            color: #8b949e;
-            font-weight: 400;
-        }
-
-        /* Steps indicator */
-        .steps {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            padding: 32px 32px 0;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .step-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            opacity: 0.4;
-            transition: opacity 0.3s;
-        }
-
-        .step-item.active { opacity: 1; }
-        .step-item.done { opacity: 0.7; }
-
-        .step-num {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #30363d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .step-item.active .step-num {
-            background: #2ea44f;
-        }
-
-        .step-item.done .step-num {
-            background: #2ea44f;
-        }
-
-        .step-label {
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .step-line {
-            width: 60px;
-            height: 2px;
-            background: #30363d;
-            margin: 0 12px;
-            flex-shrink: 0;
-        }
-
-        .step-line.done { background: #2ea44f; }
-
-        /* Container */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 32px;
-        }
-
-        .step-title {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .step-subtitle {
-            font-size: 16px;
-            color: #8b949e;
-            margin-bottom: 32px;
-        }
-
-        /* Feature cards */
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .feature-card {
-            background: #161b22;
-            border: 2px solid #30363d;
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .feature-card:hover {
-            border-color: #484f58;
-        }
-
-        .feature-card.selected {
-            border-color: #2ea44f;
-            background: #0d1f0d;
-        }
-
-        .feature-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .feature-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .feature-toggle {
-            width: 44px;
-            height: 24px;
-            border-radius: 12px;
-            background: #30363d;
-            position: relative;
-            transition: background 0.2s;
-            flex-shrink: 0;
-        }
-
-        .feature-toggle::after {
-            content: '';
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #8b949e;
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            transition: all 0.2s;
-        }
-
-        .feature-card.selected .feature-toggle {
-            background: #2ea44f;
-        }
-
-        .feature-card.selected .feature-toggle::after {
-            background: white;
-            left: 23px;
-        }
-
-        .feature-card p {
-            font-size: 13px;
-            color: #8b949e;
-            line-height: 1.4;
-        }
-
-        /* Configure fields */
-        .config-section {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 16px;
-        }
-
-        .config-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .config-section .badge {
-            font-size: 11px;
-            background: #30363d;
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: #8b949e;
-            font-weight: 400;
-        }
-
-        .field-group {
-            margin-bottom: 16px;
-        }
-
-        .field-group:last-child { margin-bottom: 0; }
-
-        .field-group label {
-            display: block;
-            font-size: 13px;
-            color: #8b949e;
-            margin-bottom: 6px;
-        }
-
-        .field-group input, .field-group select {
-            width: 100%;
-            padding: 10px 14px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            color: #e6edf3;
-            font-size: 14px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .field-group input:focus, .field-group select:focus {
-            border-color: #2ea44f;
-        }
-
-        .field-group input::placeholder {
-            color: #484f58;
-        }
-
-        .field-row {
-            display: flex;
-            gap: 12px;
-        }
-
-        .field-row .field-group { flex: 1; }
-
-        .no-config-msg {
-            text-align: center;
-            padding: 40px;
-            color: #484f58;
-            font-size: 15px;
-        }
-
-        /* Buttons */
-        .btn-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 32px;
-        }
+        .header-actions { display: flex; gap: 8px; }
 
         .btn {
-            padding: 12px 24px;
+            padding: 8px 16px;
             border-radius: 8px;
             border: 1px solid #30363d;
             background: #21262d;
             color: #e6edf3;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s;
@@ -303,57 +68,341 @@
         }
 
         .btn:hover { background: #30363d; }
+        .btn-green { background: #2ea44f; border-color: #2ea44f; color: white; }
+        .btn-green:hover { background: #3fb950; }
+        .btn-blue { background: #1f6feb; border-color: #1f6feb; color: white; }
+        .btn-blue:hover { background: #388bfd; }
 
-        .btn-primary {
-            background: #2ea44f;
-            border-color: #2ea44f;
-            color: white;
-        }
-
-        .btn-primary:hover { background: #3fb950; }
-
-        .btn-large {
-            padding: 16px 48px;
-            font-size: 18px;
-            border-radius: 12px;
-        }
-
-        /* Step 3 — Result */
-        .result-tabs {
+        /* Layout */
+        .layout {
             display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
+            flex: 1;
+            overflow: hidden;
         }
 
-        .result-tab {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
-            background: #21262d;
+        /* Sidebar — Action Palette */
+        .palette {
+            width: 240px;
+            background: #161b22;
+            border-right: 1px solid #30363d;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .palette-header {
+            padding: 14px 16px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: #8b949e;
+        }
+
+        .palette-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            cursor: grab;
+            transition: background 0.15s;
+            border-left: 3px solid transparent;
+        }
+
+        .palette-item:hover {
+            background: #1c2129;
+        }
+
+        .palette-item:active { cursor: grabbing; }
+
+        .palette-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .palette-item .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .palette-item .desc {
+            font-size: 11px;
+            color: #484f58;
+            margin-top: 1px;
+        }
+
+        .palette-divider {
+            height: 1px;
+            background: #21262d;
+            margin: 8px 16px;
+        }
+
+        /* Canvas */
+        .canvas-wrap {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 120px;
+            position: relative;
+        }
+
+        .canvas-wrap.drag-over {
+            background: #0d1f0d;
+        }
+
+        .flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            min-width: 420px;
+        }
+
+        /* Flow blocks */
+        .flow-block {
+            width: 400px;
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 12px;
+            position: relative;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .flow-block:hover {
+            border-color: #484f58;
+        }
+
+        .flow-block.dragging {
+            opacity: 0.4;
+        }
+
+        .flow-block.drag-target-above::before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: #2ea44f;
+            border-radius: 2px;
+        }
+
+        .flow-block-header {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            gap: 10px;
+            cursor: grab;
+        }
+
+        .flow-block-header:active { cursor: grabbing; }
+
+        .flow-block.start .flow-block-header { cursor: default; }
+
+        .block-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .block-title {
+            flex: 1;
             font-size: 14px;
+            font-weight: 600;
+        }
+
+        .block-delete {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: #484f58;
+            font-size: 16px;
             cursor: pointer;
-            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.15s;
         }
 
-        .result-tab.active {
+        .block-delete:hover {
+            background: #da3633;
+            color: white;
+        }
+
+        .block-config {
+            padding: 0 16px 14px;
+            display: none;
+        }
+
+        .block-config.has-fields {
+            display: block;
+        }
+
+        .block-field {
+            margin-bottom: 10px;
+        }
+
+        .block-field:last-child { margin-bottom: 0; }
+
+        .block-field label {
+            display: block;
+            font-size: 11px;
+            color: #8b949e;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .block-field input,
+        .block-field select {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #e6edf3;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .block-field input:focus,
+        .block-field select:focus {
+            border-color: #2ea44f;
+        }
+
+        .block-field input::placeholder { color: #30363d; }
+
+        .block-field-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .block-field-row .block-field { flex: 1; }
+
+        .add-tag-btn {
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px dashed #30363d;
+            background: transparent;
+            color: #8b949e;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 6px;
+            font-family: inherit;
+        }
+
+        .add-tag-btn:hover { border-color: #484f58; color: #e6edf3; }
+
+        /* Arrow connector */
+        .flow-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 40px;
+            position: relative;
+        }
+
+        .flow-arrow .line {
+            width: 2px;
+            flex: 1;
+            background: #30363d;
+        }
+
+        .flow-arrow .arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #30363d;
+        }
+
+        /* Start block special */
+        .flow-block.start {
+            border-color: #2ea44f;
+            background: linear-gradient(180deg, #0d1f0d, #161b22);
+        }
+
+        /* Add block button in flow */
+        .add-block-btn {
+            width: 400px;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px dashed #21262d;
+            background: transparent;
+            color: #484f58;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .add-block-btn:hover {
+            border-color: #30363d;
+            color: #8b949e;
+            background: #161b2208;
+        }
+
+        /* Right panel — Preview */
+        .preview-panel {
+            width: 340px;
+            background: #161b22;
+            border-left: 1px solid #30363d;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .preview-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .preview-header h2 {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .preview-tabs {
+            display: flex;
+            gap: 2px;
+        }
+
+        .preview-tab {
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            color: #8b949e;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .preview-tab.active {
             background: #30363d;
             color: #e6edf3;
         }
 
-        .code-block {
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            padding: 20px;
-            position: relative;
-            margin-bottom: 24px;
+        .preview-code {
+            flex: 1;
+            overflow: auto;
+            padding: 16px;
         }
 
-        .code-block pre {
+        .preview-code pre {
             font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 13px;
+            font-size: 12px;
             line-height: 1.6;
             white-space: pre-wrap;
             word-break: break-word;
@@ -361,114 +410,71 @@
             margin: 0;
         }
 
-        .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid #30363d;
-            background: #21262d;
-            color: #8b949e;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.15s;
-            font-family: inherit;
-        }
-
-        .copy-btn:hover { background: #30363d; color: #e6edf3; }
-
-        .download-area {
-            text-align: center;
-            padding: 32px;
-            background: #161b22;
-            border: 2px dashed #30363d;
-            border-radius: 16px;
-            margin-bottom: 32px;
-        }
-
-        .download-area h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-
-        .download-area p {
-            color: #8b949e;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        /* Integration guide */
-        .guide {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .guide h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .guide-step {
+        .preview-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #30363d;
             display: flex;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 8px;
         }
 
-        .guide-step:last-child { margin-bottom: 0; }
+        .preview-footer .btn { flex: 1; text-align: center; font-size: 12px; }
 
-        .guide-step-num {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #2ea44f;
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: fixed;
+            background: #1c2129;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 6px;
+            min-width: 220px;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            display: none;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 600;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.1s;
+            border: none;
+            background: none;
+            color: #e6edf3;
             font-size: 13px;
+            font-family: inherit;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item:hover { background: #30363d; }
+
+        .dropdown-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .guide-step-content h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .guide-step-content p {
-            font-size: 13px;
-            color: #8b949e;
-            line-height: 1.5;
-        }
-
-        .guide-step-content code {
-            background: #0d1117;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'SF Mono', monospace;
-            font-size: 12px;
-            color: #79c0ff;
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 32px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: #2ea44f;
             color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 500;
             opacity: 0;
             transition: all 0.3s;
-            z-index: 1000;
+            z-index: 200;
             pointer-events: none;
         }
 
@@ -477,27 +483,18 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Page hidden */
-        .page { display: none; }
-        .page.active { display: block; }
+        /* Colors */
+        .c-green { background: #2ea44f; }
+        .c-blue { background: #1f6feb; }
+        .c-purple { background: #8957e5; }
+        .c-orange { background: #d29922; }
+        .c-teal { background: #3fb4bf; }
+        .c-pink { background: #db61a2; }
+        .c-red { background: #f85149; }
 
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .empty-state p {
-            color: #484f58;
-            font-size: 16px;
-        }
-
-        @media (max-width: 700px) {
-            .features-grid { grid-template-columns: 1fr; }
-            .container { padding: 20px; }
-            .steps { padding: 20px 20px 0; }
-            .step-label { display: none; }
-            .field-row { flex-direction: column; }
+        @media (max-width: 900px) {
+            .preview-panel { display: none; }
+            .palette { width: 200px; }
         }
     </style>
 </head>
@@ -508,362 +505,449 @@
         <div class="logo-icon">P</div>
         <h1>Pushwoosh <span>NoCode Builder</span></h1>
     </div>
+    <div class="header-actions">
+        <button class="btn btn-blue" onclick="copyCode()">Copy</button>
+        <button class="btn btn-green" onclick="downloadJSON()">Download JSON</button>
+    </div>
 </header>
 
-<div class="steps">
-    <div class="step-item active" id="stepInd1" onclick="goToStep(1)">
-        <div class="step-num">1</div>
-        <div class="step-label">Choose Features</div>
-    </div>
-    <div class="step-line" id="line1"></div>
-    <div class="step-item" id="stepInd2" onclick="goToStep(2)">
-        <div class="step-num">2</div>
-        <div class="step-label">Configure</div>
-    </div>
-    <div class="step-line" id="line2"></div>
-    <div class="step-item" id="stepInd3" onclick="goToStep(3)">
-        <div class="step-num">3</div>
-        <div class="step-label">Get Config</div>
-    </div>
-</div>
+<div class="layout">
+    <!-- Left: Action Palette -->
+    <div class="palette">
+        <div class="palette-header">Drag actions to flow</div>
 
-<!-- STEP 1: Choose Features -->
-<div class="container page active" id="page1">
-    <h2 class="step-title">What do you need?</h2>
-    <p class="step-subtitle">Select the features you want to use. You can always change this later.</p>
-
-    <div class="features-grid">
-        <div class="feature-card selected" data-feature="push" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Push Notifications</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Register device for push notifications and request permission from the user.</p>
-        </div>
-
-        <div class="feature-card" data-feature="userId" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>User ID</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Identify users by their ID for targeted push notifications.</p>
-        </div>
-
-        <div class="feature-card" data-feature="email" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Email</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Set user email for email campaigns and segmentation.</p>
-        </div>
-
-        <div class="feature-card" data-feature="tags" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Tags</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Set custom tags for user segmentation and personalization.</p>
-        </div>
-
-        <div class="feature-card" data-feature="language" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Language</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Override device language for localized push notifications.</p>
-        </div>
-
-        <div class="feature-card" data-feature="communication" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Communication</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Control when the SDK starts or stops talking to the server.</p>
-        </div>
-
-        <div class="feature-card" data-feature="proxy" onclick="toggleFeature(this)">
-            <div class="feature-card-header">
-                <h3>Reverse Proxy</h3>
-                <div class="feature-toggle"></div>
-            </div>
-            <p>Route all SDK traffic through your own server for compliance.</p>
-        </div>
-    </div>
-
-    <div class="btn-row">
-        <div></div>
-        <button class="btn btn-primary" onclick="goToStep(2)">Next: Configure</button>
-    </div>
-</div>
-
-<!-- STEP 2: Configure -->
-<div class="container page" id="page2">
-    <h2 class="step-title">Configure</h2>
-    <p class="step-subtitle">Fill in the values for your selected features.</p>
-
-    <div id="configSections"></div>
-
-    <div class="btn-row">
-        <button class="btn" onclick="goToStep(1)">Back</button>
-        <button class="btn btn-primary" onclick="goToStep(3)">Next: Get Config</button>
-    </div>
-</div>
-
-<!-- STEP 3: Get Config -->
-<div class="container page" id="page3">
-    <h2 class="step-title">Your config is ready</h2>
-    <p class="step-subtitle">Download the JSON file and add it to your app.</p>
-
-    <div class="download-area">
-        <h3>pushwoosh-nocode.json</h3>
-        <p>Add this file to your Xcode project's main bundle</p>
-        <button class="btn btn-primary btn-large" onclick="downloadJSON()">Download JSON</button>
-    </div>
-
-    <div class="result-tabs">
-        <button class="result-tab active" onclick="switchResultTab('json', this)">JSON</button>
-        <button class="result-tab" onclick="switchResultTab('swift', this)">Swift</button>
-    </div>
-
-    <div class="code-block">
-        <button class="copy-btn" onclick="copyCode()">Copy</button>
-        <pre id="codeOutput"></pre>
-    </div>
-
-    <div class="guide">
-        <h3>Integration Guide</h3>
-        <div class="guide-step">
-            <div class="guide-step-num">1</div>
-            <div class="guide-step-content">
-                <h4>Add Pushwoosh SDK</h4>
-                <p>Add <code>PushwooshXCFramework</code> and <code>PushwooshXCFramework/PushwooshNoCode</code> via CocoaPods, or link frameworks manually.</p>
+        <div class="palette-item" draggable="true" data-type="registerForPushNotifications" data-color="blue">
+            <div class="palette-dot c-blue"></div>
+            <div>
+                <div class="label">Push Notifications</div>
+                <div class="desc">Register for push</div>
             </div>
         </div>
-        <div class="guide-step">
-            <div class="guide-step-num">2</div>
-            <div class="guide-step-content">
-                <h4>Add JSON to your project</h4>
-                <p>Drag <code>pushwoosh-nocode.json</code> into Xcode. Make sure "Copy items if needed" and your app target are checked.</p>
+
+        <div class="palette-item" draggable="true" data-type="setUserId" data-color="purple">
+            <div class="palette-dot c-purple"></div>
+            <div>
+                <div class="label">Set User ID</div>
+                <div class="desc">Identify user</div>
             </div>
         </div>
-        <div class="guide-step">
-            <div class="guide-step-num">3</div>
-            <div class="guide-step-content">
-                <h4>Set your App ID</h4>
-                <p>Add <code>Pushwoosh_APPID</code> key to your app's <code>Info.plist</code> with your Pushwoosh Application Code.</p>
+
+        <div class="palette-item" draggable="true" data-type="setEmail" data-color="purple">
+            <div class="palette-dot c-purple"></div>
+            <div>
+                <div class="label">Set Email</div>
+                <div class="desc">User email</div>
             </div>
         </div>
-        <div class="guide-step">
-            <div class="guide-step-num">4</div>
-            <div class="guide-step-content">
-                <h4>Enable Push in Xcode</h4>
-                <p>Go to your target's Signing & Capabilities, click "+ Capability" and add "Push Notifications".</p>
+
+        <div class="palette-divider"></div>
+
+        <div class="palette-item" draggable="true" data-type="setTags" data-color="orange">
+            <div class="palette-dot c-orange"></div>
+            <div>
+                <div class="label">Set Tag</div>
+                <div class="desc">Custom tag</div>
             </div>
         </div>
-        <div class="guide-step">
-            <div class="guide-step-num">5</div>
-            <div class="guide-step-content">
-                <h4>Build & Run</h4>
-                <p>That's it! The SDK reads the JSON on launch and executes all actions automatically. Zero code needed.</p>
+
+        <div class="palette-item" draggable="true" data-type="incrementTag" data-color="orange">
+            <div class="palette-dot c-orange"></div>
+            <div>
+                <div class="label">Increment Tag</div>
+                <div class="desc">Numeric tag +1</div>
+            </div>
+        </div>
+
+        <div class="palette-divider"></div>
+
+        <div class="palette-item" draggable="true" data-type="setLanguage" data-color="teal">
+            <div class="palette-dot c-teal"></div>
+            <div>
+                <div class="label">Set Language</div>
+                <div class="desc">Override locale</div>
+            </div>
+        </div>
+
+        <div class="palette-item" draggable="true" data-type="startCommunication" data-color="pink">
+            <div class="palette-dot c-pink"></div>
+            <div>
+                <div class="label">Start Communication</div>
+                <div class="desc">Enable server sync</div>
+            </div>
+        </div>
+
+        <div class="palette-item" draggable="true" data-type="stopCommunication" data-color="pink">
+            <div class="palette-dot c-pink"></div>
+            <div>
+                <div class="label">Stop Communication</div>
+                <div class="desc">Disable server sync</div>
+            </div>
+        </div>
+
+        <div class="palette-divider"></div>
+
+        <div class="palette-item" draggable="true" data-type="setReverseProxy" data-color="red">
+            <div class="palette-dot c-red"></div>
+            <div>
+                <div class="label">Reverse Proxy</div>
+                <div class="desc">Custom endpoint</div>
             </div>
         </div>
     </div>
 
-    <div class="btn-row">
-        <button class="btn" onclick="goToStep(2)">Back</button>
-        <button class="btn btn-primary" onclick="downloadJSON()">Download JSON</button>
+    <!-- Center: Flow Canvas -->
+    <div class="canvas-wrap" id="canvasWrap">
+        <div class="flow" id="flow"></div>
+    </div>
+
+    <!-- Right: Preview Panel -->
+    <div class="preview-panel">
+        <div class="preview-header">
+            <h2>Generated Config</h2>
+            <div class="preview-tabs">
+                <button class="preview-tab active" onclick="switchTab('json', this)">JSON</button>
+                <button class="preview-tab" onclick="switchTab('swift', this)">Swift</button>
+            </div>
+        </div>
+        <div class="preview-code">
+            <pre id="previewOutput"></pre>
+        </div>
+        <div class="preview-footer">
+            <button class="btn" onclick="copyCode()">Copy</button>
+            <button class="btn btn-green" onclick="downloadJSON()">Download</button>
+        </div>
     </div>
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="dropdown-menu" id="addMenu"></div>
 
 <script>
-let currentStep = 1;
-let resultTab = 'json';
-
-const features = {
-    push: { enabled: true },
-    userId: { enabled: false, value: '' },
-    email: { enabled: false, value: '' },
-    tags: { enabled: false, tags: [{ key: '', value: '' }] },
-    language: { enabled: false, value: 'en' },
-    communication: { enabled: false, mode: 'start' },
-    proxy: { enabled: false, value: '' }
+const BLOCK_DEFS = {
+    registerForPushNotifications: {
+        title: 'Register for Push Notifications',
+        color: 'blue',
+        fields: []
+    },
+    setUserId: {
+        title: 'Set User ID',
+        color: 'purple',
+        fields: [{ name: 'value', label: 'User ID', placeholder: 'user_123' }]
+    },
+    setEmail: {
+        title: 'Set Email',
+        color: 'purple',
+        fields: [{ name: 'value', label: 'Email', placeholder: 'user@example.com', type: 'email' }]
+    },
+    setTags: {
+        title: 'Set Tag',
+        color: 'orange',
+        fields: [
+            { name: 'key', label: 'Tag Name', placeholder: 'category', half: true },
+            { name: 'value', label: 'Tag Value', placeholder: 'premium', half: true }
+        ]
+    },
+    incrementTag: {
+        title: 'Increment Tag',
+        color: 'orange',
+        fields: [
+            { name: 'key', label: 'Tag Name', placeholder: 'app_opens', half: true },
+            { name: 'value', label: 'Increment By', placeholder: '1', type: 'number', half: true }
+        ]
+    },
+    setLanguage: {
+        title: 'Set Language',
+        color: 'teal',
+        fields: [{
+            name: 'value', label: 'Language', type: 'select',
+            options: [
+                ['English', 'en'], ['Spanish', 'es'], ['French', 'fr'],
+                ['German', 'de'], ['Portuguese', 'pt'], ['Russian', 'ru'],
+                ['Chinese', 'zh'], ['Japanese', 'ja'], ['Korean', 'ko'], ['Arabic', 'ar']
+            ]
+        }]
+    },
+    startCommunication: {
+        title: 'Start Server Communication',
+        color: 'pink',
+        fields: []
+    },
+    stopCommunication: {
+        title: 'Stop Server Communication',
+        color: 'pink',
+        fields: []
+    },
+    setReverseProxy: {
+        title: 'Set Reverse Proxy',
+        color: 'red',
+        fields: [{ name: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com', type: 'url' }]
+    }
 };
 
-function toggleFeature(card) {
-    const f = card.dataset.feature;
-    features[f].enabled = !features[f].enabled;
-    card.classList.toggle('selected');
-}
+let flowActions = [];
+let nextId = 1;
+let currentTab = 'json';
+let dragSrcIndex = null;
+let dragType = null;
 
-function goToStep(step) {
-    currentStep = step;
+function addAction(type, index) {
+    const def = BLOCK_DEFS[type];
+    if (!def) return;
 
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page' + step).classList.add('active');
-
-    for (let i = 1; i <= 3; i++) {
-        const ind = document.getElementById('stepInd' + i);
-        ind.classList.remove('active', 'done');
-        if (i < step) ind.classList.add('done');
-        if (i === step) ind.classList.add('active');
+    const data = { id: nextId++, type };
+    for (const f of def.fields) {
+        data[f.name] = f.type === 'select' ? f.options[0][1] : '';
     }
-    document.getElementById('line1').classList.toggle('done', step >= 2);
-    document.getElementById('line2').classList.toggle('done', step >= 3);
 
-    if (step === 2) buildConfigUI();
-    if (step === 3) renderOutput();
-
-    window.scrollTo(0, 0);
+    if (typeof index === 'number') {
+        flowActions.splice(index, 0, data);
+    } else {
+        flowActions.push(data);
+    }
+    renderFlow();
 }
 
-function buildConfigUI() {
-    const container = document.getElementById('configSections');
-    container.innerHTML = '';
+function removeAction(id) {
+    flowActions = flowActions.filter(a => a.id !== id);
+    renderFlow();
+}
 
-    const hasAny = Object.values(features).some(f => f.enabled && f !== features.push);
-    const onlyPush = features.push.enabled && !hasAny;
+function renderFlow() {
+    const flow = document.getElementById('flow');
+    flow.innerHTML = '';
 
-    if (onlyPush || !Object.values(features).some(f => f.enabled)) {
-        if (features.push.enabled) {
-            container.innerHTML = '<div class="config-section"><p style="color:#8b949e;text-align:center;padding:20px 0;">Push Notifications requires no configuration. Click Next to get your config.</p></div>';
-        } else {
-            container.innerHTML = '<div class="no-config-msg">No features selected. Go back and select at least one.</div>';
+    // Start block
+    const startBlock = document.createElement('div');
+    startBlock.className = 'flow-block start';
+    startBlock.innerHTML = `
+        <div class="flow-block-header">
+            <div class="block-color c-green"></div>
+            <div class="block-title">On App Start</div>
+        </div>
+    `;
+    flow.appendChild(startBlock);
+
+    // Action blocks
+    for (let i = 0; i < flowActions.length; i++) {
+        const action = flowActions[i];
+        const def = BLOCK_DEFS[action.type];
+
+        // Arrow
+        flow.appendChild(createArrow());
+
+        // Block
+        const block = document.createElement('div');
+        block.className = 'flow-block';
+        block.setAttribute('draggable', 'true');
+        block.dataset.index = i;
+
+        let fieldsHTML = '';
+        if (def.fields.length > 0) {
+            const hasHalf = def.fields.some(f => f.half);
+            if (hasHalf) {
+                fieldsHTML = '<div class="block-field-row">';
+                for (const f of def.fields) {
+                    fieldsHTML += buildFieldHTML(f, action);
+                }
+                fieldsHTML += '</div>';
+            } else {
+                for (const f of def.fields) {
+                    fieldsHTML += buildFieldHTML(f, action);
+                }
+            }
         }
-        return;
-    }
 
-    if (features.userId.enabled) {
-        container.innerHTML += `
-        <div class="config-section">
-            <h3>User ID <span class="badge">optional value</span></h3>
-            <div class="field-group">
-                <label>Default User ID (leave empty to set at runtime)</label>
-                <input type="text" placeholder="e.g. user_123" value="${features.userId.value}" oninput="features.userId.value=this.value">
+        block.innerHTML = `
+            <div class="flow-block-header">
+                <div class="block-color c-${def.color}"></div>
+                <div class="block-title">${def.title}</div>
+                <button class="block-delete" onclick="removeAction(${action.id})">&times;</button>
             </div>
-        </div>`;
-    }
+            ${fieldsHTML ? `<div class="block-config has-fields">${fieldsHTML}</div>` : ''}
+        `;
 
-    if (features.email.enabled) {
-        container.innerHTML += `
-        <div class="config-section">
-            <h3>Email <span class="badge">optional value</span></h3>
-            <div class="field-group">
-                <label>Default Email (leave empty to set at runtime)</label>
-                <input type="email" placeholder="e.g. user@example.com" value="${features.email.value}" oninput="features.email.value=this.value">
-            </div>
-        </div>`;
-    }
-
-    if (features.tags.enabled) {
-        let tagsHTML = `<div class="config-section" id="tagsSection">
-            <h3>Tags</h3>`;
-        features.tags.tags.forEach((t, i) => {
-            tagsHTML += `
-            <div class="field-row" style="margin-bottom:12px;">
-                <div class="field-group">
-                    <label>Tag Name</label>
-                    <input type="text" placeholder="e.g. category" value="${t.key}" oninput="features.tags.tags[${i}].key=this.value">
-                </div>
-                <div class="field-group">
-                    <label>Tag Value</label>
-                    <input type="text" placeholder="e.g. premium" value="${t.value}" oninput="features.tags.tags[${i}].value=this.value">
-                </div>
-            </div>`;
+        // Drag events for reordering
+        block.addEventListener('dragstart', (e) => {
+            dragSrcIndex = i;
+            dragType = null;
+            block.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
         });
-        tagsHTML += `<button class="btn" onclick="addTag()" style="margin-top:4px;">+ Add Tag</button></div>`;
-        container.innerHTML += tagsHTML;
+
+        block.addEventListener('dragend', () => {
+            block.classList.remove('dragging');
+            dragSrcIndex = null;
+            document.querySelectorAll('.drag-target-above').forEach(el => el.classList.remove('drag-target-above'));
+        });
+
+        block.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (dragSrcIndex !== null || dragType) {
+                block.classList.add('drag-target-above');
+            }
+        });
+
+        block.addEventListener('dragleave', () => {
+            block.classList.remove('drag-target-above');
+        });
+
+        block.addEventListener('drop', (e) => {
+            e.preventDefault();
+            block.classList.remove('drag-target-above');
+            const targetIndex = parseInt(block.dataset.index);
+
+            if (dragType) {
+                addAction(dragType, targetIndex);
+                dragType = null;
+            } else if (dragSrcIndex !== null && dragSrcIndex !== targetIndex) {
+                const [moved] = flowActions.splice(dragSrcIndex, 1);
+                flowActions.splice(targetIndex > dragSrcIndex ? targetIndex - 1 : targetIndex, 0, moved);
+                dragSrcIndex = null;
+                renderFlow();
+            }
+        });
+
+        flow.appendChild(block);
     }
 
-    if (features.language.enabled) {
-        container.innerHTML += `
-        <div class="config-section">
-            <h3>Language</h3>
-            <div class="field-group">
-                <label>Device Language Override</label>
-                <select onchange="features.language.value=this.value">
-                    <option value="en" ${features.language.value === 'en' ? 'selected' : ''}>English (en)</option>
-                    <option value="es" ${features.language.value === 'es' ? 'selected' : ''}>Spanish (es)</option>
-                    <option value="fr" ${features.language.value === 'fr' ? 'selected' : ''}>French (fr)</option>
-                    <option value="de" ${features.language.value === 'de' ? 'selected' : ''}>German (de)</option>
-                    <option value="pt" ${features.language.value === 'pt' ? 'selected' : ''}>Portuguese (pt)</option>
-                    <option value="ru" ${features.language.value === 'ru' ? 'selected' : ''}>Russian (ru)</option>
-                    <option value="zh" ${features.language.value === 'zh' ? 'selected' : ''}>Chinese (zh)</option>
-                    <option value="ja" ${features.language.value === 'ja' ? 'selected' : ''}>Japanese (ja)</option>
-                    <option value="ko" ${features.language.value === 'ko' ? 'selected' : ''}>Korean (ko)</option>
-                    <option value="ar" ${features.language.value === 'ar' ? 'selected' : ''}>Arabic (ar)</option>
-                </select>
-            </div>
+    // Arrow + Add button
+    flow.appendChild(createArrow());
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-block-btn';
+    addBtn.textContent = '+ Add Action';
+    addBtn.addEventListener('click', (e) => showAddMenu(e));
+    flow.appendChild(addBtn);
+
+    updatePreview();
+}
+
+function buildFieldHTML(f, action) {
+    if (f.type === 'select') {
+        const opts = f.options.map(([label, val]) =>
+            `<option value="${val}" ${action[f.name] === val ? 'selected' : ''}>${label}</option>`
+        ).join('');
+        return `<div class="block-field">
+            <label>${f.label}</label>
+            <select onchange="updateField(${action.id}, '${f.name}', this.value)">${opts}</select>
         </div>`;
     }
+    return `<div class="block-field">
+        <label>${f.label}</label>
+        <input type="${f.type || 'text'}" placeholder="${f.placeholder || ''}"
+               value="${action[f.name] || ''}"
+               oninput="updateField(${action.id}, '${f.name}', this.value)">
+    </div>`;
+}
 
-    if (features.communication.enabled) {
-        container.innerHTML += `
-        <div class="config-section">
-            <h3>Communication</h3>
-            <div class="field-group">
-                <label>On app start</label>
-                <select onchange="features.communication.mode=this.value">
-                    <option value="start" ${features.communication.mode === 'start' ? 'selected' : ''}>Start server communication</option>
-                    <option value="stop" ${features.communication.mode === 'stop' ? 'selected' : ''}>Stop server communication</option>
-                </select>
-            </div>
-        </div>`;
-    }
-
-    if (features.proxy.enabled) {
-        container.innerHTML += `
-        <div class="config-section">
-            <h3>Reverse Proxy</h3>
-            <div class="field-group">
-                <label>Proxy URL</label>
-                <input type="url" placeholder="https://proxy.example.com" value="${features.proxy.value}" oninput="features.proxy.value=this.value">
-            </div>
-        </div>`;
+function updateField(id, field, value) {
+    const action = flowActions.find(a => a.id === id);
+    if (action) {
+        action[field] = value;
+        updatePreview();
     }
 }
 
-function addTag() {
-    features.tags.tags.push({ key: '', value: '' });
-    buildConfigUI();
+function createArrow() {
+    const arrow = document.createElement('div');
+    arrow.className = 'flow-arrow';
+    arrow.innerHTML = '<div class="line"></div><div class="arrow-head"></div>';
+    return arrow;
 }
 
+function showAddMenu(e) {
+    const menu = document.getElementById('addMenu');
+    menu.innerHTML = '';
+
+    for (const [type, def] of Object.entries(BLOCK_DEFS)) {
+        const item = document.createElement('button');
+        item.className = 'dropdown-item';
+        item.innerHTML = `<div class="dot c-${def.color}"></div>${def.title}`;
+        item.addEventListener('click', () => {
+            addAction(type);
+            menu.classList.remove('show');
+        });
+        menu.appendChild(item);
+    }
+
+    const rect = e.target.getBoundingClientRect();
+    menu.style.left = rect.left + 'px';
+    menu.style.top = (rect.bottom + 4) + 'px';
+    menu.classList.add('show');
+
+    setTimeout(() => {
+        document.addEventListener('click', function handler() {
+            menu.classList.remove('show');
+            document.removeEventListener('click', handler);
+        });
+    }, 0);
+}
+
+// Palette drag events
+document.querySelectorAll('.palette-item').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+        dragType = item.dataset.type;
+        dragSrcIndex = null;
+        e.dataTransfer.effectAllowed = 'copy';
+    });
+
+    item.addEventListener('dragend', () => {
+        dragType = null;
+    });
+});
+
+// Canvas drop zone (append to end)
+const canvasWrap = document.getElementById('canvasWrap');
+canvasWrap.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (dragType) canvasWrap.classList.add('drag-over');
+});
+canvasWrap.addEventListener('dragleave', () => {
+    canvasWrap.classList.remove('drag-over');
+});
+canvasWrap.addEventListener('drop', (e) => {
+    e.preventDefault();
+    canvasWrap.classList.remove('drag-over');
+    if (dragType && !e.target.closest('.flow-block')) {
+        addAction(dragType);
+        dragType = null;
+    }
+});
+
+// JSON / Swift generation
 function generateConfig() {
     const config = { version: 1, onAppStart: [] };
 
-    if (features.push.enabled) {
-        config.onAppStart.push({ type: 'registerForPushNotifications' });
-    }
-
-    if (features.userId.enabled && features.userId.value) {
-        config.onAppStart.push({ type: 'setUserId', value: features.userId.value });
-    }
-
-    if (features.email.enabled && features.email.value) {
-        config.onAppStart.push({ type: 'setEmail', value: features.email.value });
-    }
-
-    if (features.tags.enabled) {
-        for (const t of features.tags.tags) {
-            if (t.key && t.value) {
-                config.onAppStart.push({ type: 'setTags', tags: { [t.key]: t.value } });
-            }
+    for (const a of flowActions) {
+        switch (a.type) {
+            case 'registerForPushNotifications':
+                config.onAppStart.push({ type: 'registerForPushNotifications' });
+                break;
+            case 'setUserId':
+                if (a.value) config.onAppStart.push({ type: 'setUserId', value: a.value });
+                break;
+            case 'setEmail':
+                if (a.value) config.onAppStart.push({ type: 'setEmail', value: a.value });
+                break;
+            case 'setTags':
+                if (a.key && a.value) config.onAppStart.push({ type: 'setTags', tags: { [a.key]: a.value } });
+                break;
+            case 'incrementTag':
+                if (a.key) config.onAppStart.push({ type: 'incrementTag', key: a.key, value: Number(a.value) || 1 });
+                break;
+            case 'setLanguage':
+                config.onAppStart.push({ type: 'setLanguage', value: a.value || 'en' });
+                break;
+            case 'startCommunication':
+                config.onAppStart.push({ type: 'startCommunication' });
+                break;
+            case 'stopCommunication':
+                config.onAppStart.push({ type: 'stopCommunication' });
+                break;
+            case 'setReverseProxy':
+                if (a.value) config.onAppStart.push({ type: 'setReverseProxy', value: a.value });
+                break;
         }
-    }
-
-    if (features.language.enabled) {
-        config.onAppStart.push({ type: 'setLanguage', value: features.language.value });
-    }
-
-    if (features.communication.enabled) {
-        config.onAppStart.push({
-            type: features.communication.mode === 'start' ? 'startCommunication' : 'stopCommunication'
-        });
-    }
-
-    if (features.proxy.enabled && features.proxy.value) {
-        config.onAppStart.push({ type: 'setReverseProxy', value: features.proxy.value });
     }
 
     return config;
@@ -877,37 +961,32 @@ function generateSwift(config) {
         'import PushwooshFramework',
         '',
         'func application(_ application: UIApplication,',
-        '                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {'
+        '    didFinishLaunchingWithOptions launchOptions:',
+        '    [UIApplication.LaunchOptionsKey: Any]?) -> Bool {'
     ];
 
     for (const a of config.onAppStart) {
         switch (a.type) {
             case 'registerForPushNotifications':
-                lines.push('    Pushwoosh.configure.registerForPushNotifications()');
-                break;
+                lines.push('    Pushwoosh.configure.registerForPushNotifications()'); break;
             case 'setUserId':
-                lines.push(`    Pushwoosh.configure.setUserId("${a.value}")`);
-                break;
+                lines.push(`    Pushwoosh.configure.setUserId("${a.value}")`); break;
             case 'setEmail':
-                lines.push(`    Pushwoosh.configure.setEmail("${a.value}")`);
-                break;
+                lines.push(`    Pushwoosh.configure.setEmail("${a.value}")`); break;
             case 'setTags': {
-                const entries = Object.entries(a.tags).map(([k, v]) => `"${k}": "${v}"`).join(', ');
-                lines.push(`    Pushwoosh.configure.setTags([${entries}])`);
-                break;
+                const e = Object.entries(a.tags).map(([k,v]) => `"${k}": "${v}"`).join(', ');
+                lines.push(`    Pushwoosh.configure.setTags([${e}])`); break;
             }
+            case 'incrementTag':
+                lines.push(`    Pushwoosh.configure.setTags(["${a.key}": PWTagsBuilder.incrementalTag(withInteger: ${a.value})])`); break;
             case 'setLanguage':
-                lines.push(`    Pushwoosh.configure.setLanguage("${a.value}")`);
-                break;
+                lines.push(`    Pushwoosh.configure.setLanguage("${a.value}")`); break;
             case 'startCommunication':
-                lines.push('    Pushwoosh.configure.startServerCommunication()');
-                break;
+                lines.push('    Pushwoosh.configure.startServerCommunication()'); break;
             case 'stopCommunication':
-                lines.push('    Pushwoosh.configure.stopServerCommunication()');
-                break;
+                lines.push('    Pushwoosh.configure.stopServerCommunication()'); break;
             case 'setReverseProxy':
-                lines.push(`    Pushwoosh.configure.setReverseProxy("${a.value}")`);
-                break;
+                lines.push(`    Pushwoosh.configure.setReverseProxy("${a.value}")`); break;
         }
     }
 
@@ -916,31 +995,28 @@ function generateSwift(config) {
     return lines.join('\n');
 }
 
-function renderOutput() {
+function updatePreview() {
     const config = generateConfig();
-    const el = document.getElementById('codeOutput');
-    if (resultTab === 'json') {
-        el.textContent = JSON.stringify(config, null, 2);
-    } else {
-        el.textContent = generateSwift(config);
-    }
+    const el = document.getElementById('previewOutput');
+    el.textContent = currentTab === 'json'
+        ? JSON.stringify(config, null, 2)
+        : generateSwift(config);
 }
 
-function switchResultTab(tab, btn) {
-    resultTab = tab;
-    document.querySelectorAll('.result-tab').forEach(b => b.classList.remove('active'));
+function switchTab(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll('.preview-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderOutput();
+    updatePreview();
 }
 
 function copyCode() {
-    const text = document.getElementById('codeOutput').textContent;
+    const text = document.getElementById('previewOutput').textContent;
     navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
 }
 
 function downloadJSON() {
-    const config = generateConfig();
-    const json = JSON.stringify(config, null, 2);
+    const json = JSON.stringify(generateConfig(), null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -951,12 +1027,15 @@ function downloadJSON() {
     showToast('Downloaded pushwoosh-nocode.json');
 }
 
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2000);
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
 }
+
+// Init with default "Register Push"
+addAction('registerForPushNotifications');
 </script>
 
 </body>
