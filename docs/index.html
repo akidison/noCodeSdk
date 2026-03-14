@@ -4,497 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pushwoosh NoCode Builder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.59/dist/drawflow.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.59/dist/drawflow.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --bg3: #1c2129;
+            --border: #30363d;
+            --border2: #484f58;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #484f58;
+            --green: #2ea44f;
+            --green2: #3fb950;
+            --blue: #1f6feb;
+            --purple: #8957e5;
+            --orange: #d29922;
+            --teal: #3fb4bf;
+            --pink: #db61a2;
+            --red: #f85149;
+            --yellow: #e3b341;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0d1117;
-            color: #e6edf3;
+            background: var(--bg);
+            color: var(--text);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            user-select: none;
         }
 
         /* Header */
         header {
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-            padding: 12px 20px;
+            background: var(--bg2);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
-            z-index: 10;
+            z-index: 20;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .logo { display: flex; align-items: center; gap: 10px; }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #2ea44f, #3fb950);
+            width: 30px; height: 30px;
+            background: linear-gradient(135deg, var(--green), var(--green2));
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 16px; color: white;
         }
 
-        .logo h1 { font-size: 17px; font-weight: 600; }
-        .logo h1 span { color: #8b949e; font-weight: 400; }
+        .logo h1 { font-size: 16px; font-weight: 600; }
+        .logo h1 span { color: var(--text2); font-weight: 400; }
 
-        .header-actions { display: flex; gap: 8px; }
+        .header-actions { display: flex; gap: 6px; }
 
         .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
-            background: #21262d;
-            color: #e6edf3;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
-            font-family: inherit;
+            padding: 7px 14px; border-radius: 6px;
+            border: 1px solid var(--border); background: #21262d;
+            color: var(--text); font-size: 12px; font-weight: 500;
+            cursor: pointer; transition: all 0.15s; font-family: inherit;
         }
-
-        .btn:hover { background: #30363d; }
-        .btn-green { background: #2ea44f; border-color: #2ea44f; color: white; }
-        .btn-green:hover { background: #3fb950; }
-        .btn-blue { background: #1f6feb; border-color: #1f6feb; color: white; }
+        .btn:hover { background: var(--border); }
+        .btn-green { background: var(--green); border-color: var(--green); color: white; }
+        .btn-green:hover { background: var(--green2); }
+        .btn-blue { background: var(--blue); border-color: var(--blue); color: white; }
         .btn-blue:hover { background: #388bfd; }
 
         /* Layout */
-        .layout {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+        .layout { display: flex; flex: 1; overflow: hidden; }
 
-        /* Sidebar — Action Palette */
+        /* Palette */
         .palette {
-            width: 240px;
-            background: #161b22;
-            border-right: 1px solid #30363d;
-            display: flex;
-            flex-direction: column;
+            width: 220px;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
             flex-shrink: 0;
         }
 
-        .palette-header {
-            padding: 14px 16px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #8b949e;
+        .palette-group {
+            padding: 12px 12px 4px;
+            font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text3);
         }
 
         .palette-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 16px;
-            cursor: grab;
-            transition: background 0.15s;
-            border-left: 3px solid transparent;
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 14px; margin: 2px 8px;
+            border-radius: 8px; cursor: grab;
+            transition: background 0.12s;
         }
-
-        .palette-item:hover {
-            background: #1c2129;
-        }
-
+        .palette-item:hover { background: var(--bg3); }
         .palette-item:active { cursor: grabbing; }
 
-        .palette-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
+        .p-dot {
+            width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
         }
 
-        .palette-item .label {
-            font-size: 13px;
-            font-weight: 500;
-        }
+        .palette-item .p-name { font-size: 13px; font-weight: 500; }
 
-        .palette-item .desc {
-            font-size: 11px;
-            color: #484f58;
-            margin-top: 1px;
-        }
+        /* Drawflow overrides — dark theme */
+        #drawflow { flex: 1; background: var(--bg); }
 
-        .palette-divider {
-            height: 1px;
-            background: #21262d;
-            margin: 8px 16px;
-        }
-
-        /* Canvas */
-        .canvas-wrap {
-            flex: 1;
-            overflow: auto;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px 120px;
-            position: relative;
-        }
-
-        .canvas-wrap.drag-over {
-            background: #0d1f0d;
-        }
-
-        .flow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            min-width: 420px;
-        }
-
-        /* Flow blocks */
-        .flow-block {
-            width: 400px;
-            background: #161b22;
-            border: 2px solid #30363d;
+        .drawflow .drawflow-node {
+            background: var(--bg2);
+            border: 2px solid var(--border);
             border-radius: 12px;
-            position: relative;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text);
+            min-width: 200px;
+            padding: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .flow-block:hover {
-            border-color: #484f58;
-        }
+        .drawflow .drawflow-node:hover { border-color: var(--border2); }
+        .drawflow .drawflow-node.selected { border-color: var(--green); box-shadow: 0 0 0 2px rgba(46,164,79,0.25); }
 
-        .flow-block.dragging {
-            opacity: 0.4;
-        }
-
-        .flow-block.drag-target-above::before {
-            content: '';
+        .drawflow .drawflow-node .inputs,
+        .drawflow .drawflow-node .outputs {
             position: absolute;
-            top: -18px;
-            left: 20%;
-            right: 20%;
-            height: 3px;
-            background: #2ea44f;
-            border-radius: 2px;
         }
 
-        .flow-block-header {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            gap: 10px;
-            cursor: grab;
-        }
-
-        .flow-block-header:active { cursor: grabbing; }
-
-        .flow-block.start .flow-block-header { cursor: default; }
-
-        .block-color {
-            width: 12px;
-            height: 12px;
+        .drawflow .drawflow-node .input,
+        .drawflow .drawflow-node .output {
+            width: 14px; height: 14px;
+            background: var(--border);
+            border: 2px solid var(--bg2);
             border-radius: 50%;
-            flex-shrink: 0;
         }
 
-        .block-title {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 600;
+        .drawflow .drawflow-node .input:hover,
+        .drawflow .drawflow-node .output:hover {
+            background: var(--green);
         }
 
-        .block-delete {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            border: none;
-            background: transparent;
-            color: #484f58;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
+        .drawflow .connection .main-path {
+            stroke: var(--border);
+            stroke-width: 2;
         }
 
-        .block-delete:hover {
-            background: #da3633;
+        .drawflow .connection .main-path:hover {
+            stroke: var(--green);
+        }
+
+        .drawflow .drawflow-delete {
+            background: var(--red);
             color: white;
+            border: none;
+            border-radius: 50%;
         }
 
-        .block-config {
-            padding: 0 16px 14px;
-            display: none;
+        /* Custom node styles */
+        .node-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            font-size: 13px; font-weight: 600;
+            border-bottom: 1px solid var(--border);
         }
 
-        .block-config.has-fields {
-            display: block;
+        .node-dot {
+            width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
         }
 
-        .block-field {
-            margin-bottom: 10px;
+        .node-body {
+            padding: 10px 14px;
         }
 
-        .block-field:last-child { margin-bottom: 0; }
+        .node-body:empty { display: none; }
 
-        .block-field label {
-            display: block;
-            font-size: 11px;
-            color: #8b949e;
-            margin-bottom: 4px;
-            font-weight: 500;
+        .node-field {
+            margin-bottom: 8px;
+        }
+        .node-field:last-child { margin-bottom: 0; }
+
+        .node-field label {
+            display: block; font-size: 10px; color: var(--text2);
+            margin-bottom: 3px; font-weight: 500;
         }
 
-        .block-field input,
-        .block-field select {
-            width: 100%;
-            padding: 8px 12px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            color: #e6edf3;
-            font-size: 13px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.2s;
+        .node-field input, .node-field select {
+            width: 100%; padding: 6px 10px;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 6px; color: var(--text);
+            font-size: 12px; font-family: inherit; outline: none;
         }
 
-        .block-field input:focus,
-        .block-field select:focus {
-            border-color: #2ea44f;
+        .node-field input:focus, .node-field select:focus {
+            border-color: var(--green);
         }
 
-        .block-field input::placeholder { color: #30363d; }
+        .node-field input::placeholder { color: var(--text3); }
 
-        .block-field-row {
+        .node-field-row {
+            display: flex; gap: 6px;
+        }
+        .node-field-row .node-field { flex: 1; margin-bottom: 0; }
+
+        /* Condition node special styling */
+        .drawflow .drawflow-node.condition {
+            border-color: var(--yellow);
+            background: linear-gradient(180deg, #1a1800, var(--bg2));
+        }
+
+        .drawflow .drawflow-node.condition .outputs {
             display: flex;
-            gap: 8px;
         }
 
-        .block-field-row .block-field { flex: 1; }
-
-        .add-tag-btn {
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px dashed #30363d;
-            background: transparent;
-            color: #8b949e;
-            font-size: 11px;
-            cursor: pointer;
-            margin-top: 6px;
-            font-family: inherit;
-        }
-
-        .add-tag-btn:hover { border-color: #484f58; color: #e6edf3; }
-
-        /* Arrow connector */
-        .flow-arrow {
+        .condition-outputs {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 40px;
-            position: relative;
+            justify-content: space-between;
+            padding: 6px 14px 10px;
+            font-size: 10px;
+            color: var(--text2);
         }
 
-        .flow-arrow .line {
-            width: 2px;
-            flex: 1;
-            background: #30363d;
+        .condition-outputs span { font-weight: 600; }
+        .cond-yes { color: var(--green2); }
+        .cond-no { color: var(--red); }
+
+        /* Start node special */
+        .drawflow .drawflow-node.start {
+            border-color: var(--green);
+            background: linear-gradient(180deg, #0d1f0d, var(--bg2));
         }
 
-        .flow-arrow .arrow-head {
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 8px solid #30363d;
-        }
-
-        /* Start block special */
-        .flow-block.start {
-            border-color: #2ea44f;
-            background: linear-gradient(180deg, #0d1f0d, #161b22);
-        }
-
-        /* Add block button in flow */
-        .add-block-btn {
-            width: 400px;
-            padding: 16px;
-            border-radius: 12px;
-            border: 2px dashed #21262d;
-            background: transparent;
-            color: #484f58;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-            text-align: center;
-        }
-
-        .add-block-btn:hover {
-            border-color: #30363d;
-            color: #8b949e;
-            background: #161b2208;
-        }
-
-        /* Right panel — Preview */
+        /* Right Panel */
         .preview-panel {
-            width: 340px;
-            background: #161b22;
-            border-left: 1px solid #30363d;
-            display: flex;
-            flex-direction: column;
+            width: 300px;
+            background: var(--bg2);
+            border-left: 1px solid var(--border);
+            display: flex; flex-direction: column;
             flex-shrink: 0;
         }
 
         .preview-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            align-items: center;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center;
             justify-content: space-between;
         }
 
-        .preview-header h2 {
-            font-size: 13px;
-            font-weight: 600;
-        }
+        .preview-header h2 { font-size: 12px; font-weight: 600; }
 
-        .preview-tabs {
-            display: flex;
-            gap: 2px;
-        }
+        .preview-tabs { display: flex; gap: 2px; }
 
         .preview-tab {
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: none;
-            background: transparent;
-            color: #8b949e;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: inherit;
+            padding: 3px 8px; border-radius: 4px;
+            border: none; background: transparent;
+            color: var(--text2); font-size: 11px;
+            cursor: pointer; font-family: inherit;
         }
-
-        .preview-tab.active {
-            background: #30363d;
-            color: #e6edf3;
-        }
+        .preview-tab.active { background: var(--border); color: var(--text); }
 
         .preview-code {
-            flex: 1;
-            overflow: auto;
-            padding: 16px;
+            flex: 1; overflow: auto; padding: 12px;
         }
 
         .preview-code pre {
             font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-word;
-            color: #c9d1d9;
-            margin: 0;
+            font-size: 11px; line-height: 1.5;
+            white-space: pre-wrap; word-break: break-word;
+            color: #c9d1d9; margin: 0;
         }
 
         .preview-footer {
-            padding: 12px 16px;
-            border-top: 1px solid #30363d;
-            display: flex;
-            gap: 8px;
+            padding: 10px 14px;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 6px;
         }
-
-        .preview-footer .btn { flex: 1; text-align: center; font-size: 12px; }
-
-        /* Dropdown menu */
-        .dropdown-menu {
-            position: fixed;
-            background: #1c2129;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 6px;
-            min-width: 220px;
-            z-index: 100;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: none;
-        }
-
-        .dropdown-menu.show { display: block; }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.1s;
-            border: none;
-            background: none;
-            color: #e6edf3;
-            font-size: 13px;
-            font-family: inherit;
-            width: 100%;
-            text-align: left;
-        }
-
-        .dropdown-item:hover { background: #30363d; }
-
-        .dropdown-item .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .preview-footer .btn { flex: 1; text-align: center; }
 
         /* Toast */
         .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
+            position: fixed; bottom: 24px; left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: #2ea44f;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 200;
-            pointer-events: none;
+            background: var(--green); color: white;
+            padding: 10px 20px; border-radius: 8px;
+            font-size: 13px; font-weight: 500;
+            opacity: 0; transition: all 0.3s;
+            z-index: 200; pointer-events: none;
         }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        /* Zoom controls */
+        .zoom-controls {
+            position: absolute; bottom: 16px; left: 236px;
+            display: flex; gap: 4px; z-index: 10;
         }
-
-        /* Colors */
-        .c-green { background: #2ea44f; }
-        .c-blue { background: #1f6feb; }
-        .c-purple { background: #8957e5; }
-        .c-orange { background: #d29922; }
-        .c-teal { background: #3fb4bf; }
-        .c-pink { background: #db61a2; }
-        .c-red { background: #f85149; }
+        .zoom-btn {
+            width: 32px; height: 32px;
+            border-radius: 8px; border: 1px solid var(--border);
+            background: var(--bg2); color: var(--text);
+            font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .zoom-btn:hover { background: var(--bg3); }
 
         @media (max-width: 900px) {
             .preview-panel { display: none; }
-            .palette { width: 200px; }
+            .palette { width: 180px; }
         }
     </style>
 </head>
@@ -506,101 +322,84 @@
         <h1>Pushwoosh <span>NoCode Builder</span></h1>
     </div>
     <div class="header-actions">
+        <button class="btn" onclick="clearCanvas()">Clear</button>
         <button class="btn btn-blue" onclick="copyCode()">Copy</button>
         <button class="btn btn-green" onclick="downloadJSON()">Download JSON</button>
     </div>
 </header>
 
 <div class="layout">
-    <!-- Left: Action Palette -->
+    <!-- Palette -->
     <div class="palette">
-        <div class="palette-header">Drag actions to flow</div>
-
-        <div class="palette-item" draggable="true" data-type="registerForPushNotifications" data-color="blue">
-            <div class="palette-dot c-blue"></div>
-            <div>
-                <div class="label">Push Notifications</div>
-                <div class="desc">Register for push</div>
-            </div>
+        <div class="palette-group">Entry</div>
+        <div class="palette-item" draggable="true" data-node="onAppStart">
+            <div class="p-dot" style="background:var(--green)"></div>
+            <span class="p-name">On App Start</span>
         </div>
 
-        <div class="palette-item" draggable="true" data-type="setUserId" data-color="purple">
-            <div class="palette-dot c-purple"></div>
-            <div>
-                <div class="label">Set User ID</div>
-                <div class="desc">Identify user</div>
-            </div>
+        <div class="palette-group">Push</div>
+        <div class="palette-item" draggable="true" data-node="registerPush">
+            <div class="p-dot" style="background:var(--blue)"></div>
+            <span class="p-name">Register for Push</span>
         </div>
 
-        <div class="palette-item" draggable="true" data-type="setEmail" data-color="purple">
-            <div class="palette-dot c-purple"></div>
-            <div>
-                <div class="label">Set Email</div>
-                <div class="desc">User email</div>
-            </div>
+        <div class="palette-group">User</div>
+        <div class="palette-item" draggable="true" data-node="setUserId">
+            <div class="p-dot" style="background:var(--purple)"></div>
+            <span class="p-name">Set User ID</span>
+        </div>
+        <div class="palette-item" draggable="true" data-node="setEmail">
+            <div class="p-dot" style="background:var(--purple)"></div>
+            <span class="p-name">Set Email</span>
         </div>
 
-        <div class="palette-divider"></div>
-
-        <div class="palette-item" draggable="true" data-type="setTags" data-color="orange">
-            <div class="palette-dot c-orange"></div>
-            <div>
-                <div class="label">Set Tag</div>
-                <div class="desc">Custom tag</div>
-            </div>
+        <div class="palette-group">Tags</div>
+        <div class="palette-item" draggable="true" data-node="setTag">
+            <div class="p-dot" style="background:var(--orange)"></div>
+            <span class="p-name">Set Tag</span>
+        </div>
+        <div class="palette-item" draggable="true" data-node="incrementTag">
+            <div class="p-dot" style="background:var(--orange)"></div>
+            <span class="p-name">Increment Tag</span>
         </div>
 
-        <div class="palette-item" draggable="true" data-type="incrementTag" data-color="orange">
-            <div class="palette-dot c-orange"></div>
-            <div>
-                <div class="label">Increment Tag</div>
-                <div class="desc">Numeric tag +1</div>
-            </div>
+        <div class="palette-group">Settings</div>
+        <div class="palette-item" draggable="true" data-node="setLanguage">
+            <div class="p-dot" style="background:var(--teal)"></div>
+            <span class="p-name">Set Language</span>
         </div>
 
-        <div class="palette-divider"></div>
-
-        <div class="palette-item" draggable="true" data-type="setLanguage" data-color="teal">
-            <div class="palette-dot c-teal"></div>
-            <div>
-                <div class="label">Set Language</div>
-                <div class="desc">Override locale</div>
-            </div>
+        <div class="palette-group">Communication</div>
+        <div class="palette-item" draggable="true" data-node="startComm">
+            <div class="p-dot" style="background:var(--pink)"></div>
+            <span class="p-name">Start Communication</span>
+        </div>
+        <div class="palette-item" draggable="true" data-node="stopComm">
+            <div class="p-dot" style="background:var(--pink)"></div>
+            <span class="p-name">Stop Communication</span>
         </div>
 
-        <div class="palette-item" draggable="true" data-type="startCommunication" data-color="pink">
-            <div class="palette-dot c-pink"></div>
-            <div>
-                <div class="label">Start Communication</div>
-                <div class="desc">Enable server sync</div>
-            </div>
+        <div class="palette-group">Network</div>
+        <div class="palette-item" draggable="true" data-node="reverseProxy">
+            <div class="p-dot" style="background:var(--red)"></div>
+            <span class="p-name">Reverse Proxy</span>
         </div>
 
-        <div class="palette-item" draggable="true" data-type="stopCommunication" data-color="pink">
-            <div class="palette-dot c-pink"></div>
-            <div>
-                <div class="label">Stop Communication</div>
-                <div class="desc">Disable server sync</div>
-            </div>
+        <div class="palette-group">Conditions</div>
+        <div class="palette-item" draggable="true" data-node="checkPushPermission">
+            <div class="p-dot" style="background:var(--yellow)"></div>
+            <span class="p-name">Push Permission?</span>
         </div>
-
-        <div class="palette-divider"></div>
-
-        <div class="palette-item" draggable="true" data-type="setReverseProxy" data-color="red">
-            <div class="palette-dot c-red"></div>
-            <div>
-                <div class="label">Reverse Proxy</div>
-                <div class="desc">Custom endpoint</div>
-            </div>
+        <div class="palette-item" draggable="true" data-node="checkCondition">
+            <div class="p-dot" style="background:var(--yellow)"></div>
+            <span class="p-name">Custom Condition</span>
         </div>
     </div>
 
-    <!-- Center: Flow Canvas -->
-    <div class="canvas-wrap" id="canvasWrap">
-        <div class="flow" id="flow"></div>
-    </div>
+    <!-- Canvas -->
+    <div id="drawflow"></div>
 
-    <!-- Right: Preview Panel -->
+    <!-- Preview Panel -->
     <div class="preview-panel">
         <div class="preview-header">
             <h2>Generated Config</h2>
@@ -619,381 +418,336 @@
     </div>
 </div>
 
+<div class="zoom-controls">
+    <button class="zoom-btn" onclick="editor.zoom_in()">+</button>
+    <button class="zoom-btn" onclick="editor.zoom_out()">&minus;</button>
+    <button class="zoom-btn" onclick="editor.zoom_reset()">&#8634;</button>
+</div>
+
 <div class="toast" id="toast"></div>
-<div class="dropdown-menu" id="addMenu"></div>
 
 <script>
-const BLOCK_DEFS = {
-    registerForPushNotifications: {
-        title: 'Register for Push Notifications',
-        color: 'blue',
+// ─── Node definitions ───
+const NODES = {
+    onAppStart: {
+        title: 'On App Start',
+        color: 'var(--green)',
+        inputs: 0, outputs: 1,
+        cls: 'start',
+        fields: []
+    },
+    registerPush: {
+        title: 'Register for Push',
+        color: 'var(--blue)',
+        inputs: 1, outputs: 1,
+        actionType: 'registerForPushNotifications',
         fields: []
     },
     setUserId: {
         title: 'Set User ID',
-        color: 'purple',
-        fields: [{ name: 'value', label: 'User ID', placeholder: 'user_123' }]
+        color: 'var(--purple)',
+        inputs: 1, outputs: 1,
+        actionType: 'setUserId',
+        fields: [{ key: 'value', label: 'User ID', placeholder: 'user_123' }]
     },
     setEmail: {
         title: 'Set Email',
-        color: 'purple',
-        fields: [{ name: 'value', label: 'Email', placeholder: 'user@example.com', type: 'email' }]
+        color: 'var(--purple)',
+        inputs: 1, outputs: 1,
+        actionType: 'setEmail',
+        fields: [{ key: 'value', label: 'Email', placeholder: 'user@example.com' }]
     },
-    setTags: {
+    setTag: {
         title: 'Set Tag',
-        color: 'orange',
+        color: 'var(--orange)',
+        inputs: 1, outputs: 1,
+        actionType: 'setTags',
         fields: [
-            { name: 'key', label: 'Tag Name', placeholder: 'category', half: true },
-            { name: 'value', label: 'Tag Value', placeholder: 'premium', half: true }
+            { key: 'tagKey', label: 'Tag Name', placeholder: 'category', half: true },
+            { key: 'tagValue', label: 'Value', placeholder: 'premium', half: true }
         ]
     },
     incrementTag: {
         title: 'Increment Tag',
-        color: 'orange',
+        color: 'var(--orange)',
+        inputs: 1, outputs: 1,
+        actionType: 'incrementTag',
         fields: [
-            { name: 'key', label: 'Tag Name', placeholder: 'app_opens', half: true },
-            { name: 'value', label: 'Increment By', placeholder: '1', type: 'number', half: true }
+            { key: 'tagKey', label: 'Tag Name', placeholder: 'app_opens', half: true },
+            { key: 'value', label: 'By', placeholder: '1', type: 'number', half: true }
         ]
     },
     setLanguage: {
         title: 'Set Language',
-        color: 'teal',
+        color: 'var(--teal)',
+        inputs: 1, outputs: 1,
+        actionType: 'setLanguage',
         fields: [{
-            name: 'value', label: 'Language', type: 'select',
-            options: [
-                ['English', 'en'], ['Spanish', 'es'], ['French', 'fr'],
-                ['German', 'de'], ['Portuguese', 'pt'], ['Russian', 'ru'],
-                ['Chinese', 'zh'], ['Japanese', 'ja'], ['Korean', 'ko'], ['Arabic', 'ar']
-            ]
+            key: 'value', label: 'Language', type: 'select',
+            options: [['en','English'],['es','Spanish'],['fr','French'],['de','German'],
+                      ['pt','Portuguese'],['ru','Russian'],['zh','Chinese'],['ja','Japanese'],
+                      ['ko','Korean'],['ar','Arabic']]
         }]
     },
-    startCommunication: {
-        title: 'Start Server Communication',
-        color: 'pink',
+    startComm: {
+        title: 'Start Communication',
+        color: 'var(--pink)',
+        inputs: 1, outputs: 1,
+        actionType: 'startCommunication',
         fields: []
     },
-    stopCommunication: {
-        title: 'Stop Server Communication',
-        color: 'pink',
+    stopComm: {
+        title: 'Stop Communication',
+        color: 'var(--pink)',
+        inputs: 1, outputs: 1,
+        actionType: 'stopCommunication',
         fields: []
     },
-    setReverseProxy: {
-        title: 'Set Reverse Proxy',
-        color: 'red',
-        fields: [{ name: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com', type: 'url' }]
+    reverseProxy: {
+        title: 'Reverse Proxy',
+        color: 'var(--red)',
+        inputs: 1, outputs: 1,
+        actionType: 'setReverseProxy',
+        fields: [{ key: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com' }]
+    },
+    checkPushPermission: {
+        title: 'Push Permission?',
+        color: 'var(--yellow)',
+        inputs: 1, outputs: 2,
+        cls: 'condition',
+        conditionType: 'pushPermissionGranted',
+        fields: []
+    },
+    checkCondition: {
+        title: 'Custom Condition',
+        color: 'var(--yellow)',
+        inputs: 1, outputs: 2,
+        cls: 'condition',
+        conditionType: 'custom',
+        fields: [{ key: 'condTag', label: 'Tag to check', placeholder: 'is_premium' }]
     }
 };
 
-let flowActions = [];
-let nextId = 1;
-let currentTab = 'json';
-let dragSrcIndex = null;
-let dragType = null;
+// ─── Build node HTML ───
+function buildNodeHTML(type) {
+    const def = NODES[type];
+    let html = `<div class="node-header"><div class="node-dot" style="background:${def.color}"></div>${def.title}</div>`;
 
-function addAction(type, index) {
-    const def = BLOCK_DEFS[type];
-    if (!def) return;
-
-    const data = { id: nextId++, type };
-    for (const f of def.fields) {
-        data[f.name] = f.type === 'select' ? f.options[0][1] : '';
-    }
-
-    if (typeof index === 'number') {
-        flowActions.splice(index, 0, data);
-    } else {
-        flowActions.push(data);
-    }
-    renderFlow();
-}
-
-function removeAction(id) {
-    flowActions = flowActions.filter(a => a.id !== id);
-    renderFlow();
-}
-
-function renderFlow() {
-    const flow = document.getElementById('flow');
-    flow.innerHTML = '';
-
-    // Start block
-    const startBlock = document.createElement('div');
-    startBlock.className = 'flow-block start';
-    startBlock.innerHTML = `
-        <div class="flow-block-header">
-            <div class="block-color c-green"></div>
-            <div class="block-title">On App Start</div>
-        </div>
-    `;
-    flow.appendChild(startBlock);
-
-    // Action blocks
-    for (let i = 0; i < flowActions.length; i++) {
-        const action = flowActions[i];
-        const def = BLOCK_DEFS[action.type];
-
-        // Arrow
-        flow.appendChild(createArrow());
-
-        // Block
-        const block = document.createElement('div');
-        block.className = 'flow-block';
-        block.setAttribute('draggable', 'true');
-        block.dataset.index = i;
-
-        let fieldsHTML = '';
-        if (def.fields.length > 0) {
-            const hasHalf = def.fields.some(f => f.half);
-            if (hasHalf) {
-                fieldsHTML = '<div class="block-field-row">';
-                for (const f of def.fields) {
-                    fieldsHTML += buildFieldHTML(f, action);
-                }
-                fieldsHTML += '</div>';
-            } else {
-                for (const f of def.fields) {
-                    fieldsHTML += buildFieldHTML(f, action);
-                }
-            }
+    if (def.fields.length > 0) {
+        html += '<div class="node-body">';
+        const hasHalf = def.fields.some(f => f.half);
+        if (hasHalf) {
+            html += '<div class="node-field-row">';
+            for (const f of def.fields) html += buildFieldHTML(f);
+            html += '</div>';
+        } else {
+            for (const f of def.fields) html += buildFieldHTML(f);
         }
-
-        block.innerHTML = `
-            <div class="flow-block-header">
-                <div class="block-color c-${def.color}"></div>
-                <div class="block-title">${def.title}</div>
-                <button class="block-delete" onclick="removeAction(${action.id})">&times;</button>
-            </div>
-            ${fieldsHTML ? `<div class="block-config has-fields">${fieldsHTML}</div>` : ''}
-        `;
-
-        // Drag events for reordering
-        block.addEventListener('dragstart', (e) => {
-            dragSrcIndex = i;
-            dragType = null;
-            block.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-        });
-
-        block.addEventListener('dragend', () => {
-            block.classList.remove('dragging');
-            dragSrcIndex = null;
-            document.querySelectorAll('.drag-target-above').forEach(el => el.classList.remove('drag-target-above'));
-        });
-
-        block.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            if (dragSrcIndex !== null || dragType) {
-                block.classList.add('drag-target-above');
-            }
-        });
-
-        block.addEventListener('dragleave', () => {
-            block.classList.remove('drag-target-above');
-        });
-
-        block.addEventListener('drop', (e) => {
-            e.preventDefault();
-            block.classList.remove('drag-target-above');
-            const targetIndex = parseInt(block.dataset.index);
-
-            if (dragType) {
-                addAction(dragType, targetIndex);
-                dragType = null;
-            } else if (dragSrcIndex !== null && dragSrcIndex !== targetIndex) {
-                const [moved] = flowActions.splice(dragSrcIndex, 1);
-                flowActions.splice(targetIndex > dragSrcIndex ? targetIndex - 1 : targetIndex, 0, moved);
-                dragSrcIndex = null;
-                renderFlow();
-            }
-        });
-
-        flow.appendChild(block);
+        html += '</div>';
     }
 
-    // Arrow + Add button
-    flow.appendChild(createArrow());
+    if (def.outputs === 2) {
+        html += '<div class="condition-outputs"><span class="cond-yes">Yes</span><span class="cond-no">No</span></div>';
+    }
 
-    const addBtn = document.createElement('button');
-    addBtn.className = 'add-block-btn';
-    addBtn.textContent = '+ Add Action';
-    addBtn.addEventListener('click', (e) => showAddMenu(e));
-    flow.appendChild(addBtn);
-
-    updatePreview();
+    return html;
 }
 
-function buildFieldHTML(f, action) {
+function buildFieldHTML(f) {
     if (f.type === 'select') {
-        const opts = f.options.map(([label, val]) =>
-            `<option value="${val}" ${action[f.name] === val ? 'selected' : ''}>${label}</option>`
-        ).join('');
-        return `<div class="block-field">
-            <label>${f.label}</label>
-            <select onchange="updateField(${action.id}, '${f.name}', this.value)">${opts}</select>
-        </div>`;
+        const opts = f.options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+        return `<div class="node-field"><label>${f.label}</label><select df-${f.key}>${opts}</select></div>`;
     }
-    return `<div class="block-field">
-        <label>${f.label}</label>
-        <input type="${f.type || 'text'}" placeholder="${f.placeholder || ''}"
-               value="${action[f.name] || ''}"
-               oninput="updateField(${action.id}, '${f.name}', this.value)">
-    </div>`;
+    return `<div class="node-field"><label>${f.label}</label><input type="${f.type || 'text'}" df-${f.key} placeholder="${f.placeholder || ''}"></div>`;
 }
 
-function updateField(id, field, value) {
-    const action = flowActions.find(a => a.id === id);
-    if (action) {
-        action[field] = value;
-        updatePreview();
-    }
-}
+// ─── Initialize Drawflow ───
+const el = document.getElementById('drawflow');
+const editor = new Drawflow(el);
+editor.reroute = true;
+editor.curvature = 0.5;
+editor.start();
 
-function createArrow() {
-    const arrow = document.createElement('div');
-    arrow.className = 'flow-arrow';
-    arrow.innerHTML = '<div class="line"></div><div class="arrow-head"></div>';
-    return arrow;
-}
+// ─── Add default "On App Start" node ───
+const startData = {};
+NODES.onAppStart.fields.forEach(f => startData[f.key] = '');
+editor.addNode('onAppStart', 0, 1, 100, 200, 'start', startData, buildNodeHTML('onAppStart'));
 
-function showAddMenu(e) {
-    const menu = document.getElementById('addMenu');
-    menu.innerHTML = '';
+// ─── Drag from palette ───
+let dragNodeType = null;
 
-    for (const [type, def] of Object.entries(BLOCK_DEFS)) {
-        const item = document.createElement('button');
-        item.className = 'dropdown-item';
-        item.innerHTML = `<div class="dot c-${def.color}"></div>${def.title}`;
-        item.addEventListener('click', () => {
-            addAction(type);
-            menu.classList.remove('show');
-        });
-        menu.appendChild(item);
-    }
-
-    const rect = e.target.getBoundingClientRect();
-    menu.style.left = rect.left + 'px';
-    menu.style.top = (rect.bottom + 4) + 'px';
-    menu.classList.add('show');
-
-    setTimeout(() => {
-        document.addEventListener('click', function handler() {
-            menu.classList.remove('show');
-            document.removeEventListener('click', handler);
-        });
-    }, 0);
-}
-
-// Palette drag events
 document.querySelectorAll('.palette-item').forEach(item => {
-    item.addEventListener('dragstart', (e) => {
-        dragType = item.dataset.type;
-        dragSrcIndex = null;
-        e.dataTransfer.effectAllowed = 'copy';
+    item.addEventListener('dragstart', e => {
+        dragNodeType = item.dataset.node;
+        e.dataTransfer.effectAllowed = 'move';
     });
-
-    item.addEventListener('dragend', () => {
-        dragType = null;
-    });
+    item.addEventListener('dragend', () => { dragNodeType = null; });
 });
 
-// Canvas drop zone (append to end)
-const canvasWrap = document.getElementById('canvasWrap');
-canvasWrap.addEventListener('dragover', (e) => {
+el.addEventListener('drop', e => {
     e.preventDefault();
-    if (dragType) canvasWrap.classList.add('drag-over');
+    if (!dragNodeType || !NODES[dragNodeType]) return;
+
+    const def = NODES[dragNodeType];
+    const data = {};
+    def.fields.forEach(f => {
+        data[f.key] = f.type === 'select' ? f.options[0][0] : '';
+    });
+
+    const rect = el.getBoundingClientRect();
+    const zoom = editor.zoom;
+    const x = (e.clientX - rect.left - editor.precanvas.getBoundingClientRect().left + rect.left) / zoom;
+    const y = (e.clientY - rect.top - editor.precanvas.getBoundingClientRect().top + rect.top) / zoom;
+
+    editor.addNode(
+        dragNodeType,
+        def.inputs,
+        def.outputs,
+        x, y,
+        def.cls || '',
+        data,
+        buildNodeHTML(dragNodeType)
+    );
+
+    dragNodeType = null;
+    updatePreview();
 });
-canvasWrap.addEventListener('dragleave', () => {
-    canvasWrap.classList.remove('drag-over');
-});
-canvasWrap.addEventListener('drop', (e) => {
-    e.preventDefault();
-    canvasWrap.classList.remove('drag-over');
-    if (dragType && !e.target.closest('.flow-block')) {
-        addAction(dragType);
-        dragType = null;
+
+el.addEventListener('dragover', e => { e.preventDefault(); });
+
+// ─── Events ───
+editor.on('nodeCreated', () => updatePreview());
+editor.on('nodeRemoved', () => updatePreview());
+editor.on('connectionCreated', () => updatePreview());
+editor.on('connectionRemoved', () => updatePreview());
+editor.on('nodeMoved', () => updatePreview());
+
+// Intercept input changes inside nodes
+el.addEventListener('input', e => {
+    if (e.target.matches('.node-field input, .node-field select')) {
+        // Drawflow syncs df-* attributes automatically
+        setTimeout(updatePreview, 50);
     }
 });
 
-// JSON / Swift generation
+// ─── JSON Generation (graph traversal) ───
 function generateConfig() {
+    const data = editor.export().drawflow.Home.data;
     const config = { version: 1, onAppStart: [] };
 
-    for (const a of flowActions) {
-        switch (a.type) {
-            case 'registerForPushNotifications':
-                config.onAppStart.push({ type: 'registerForPushNotifications' });
-                break;
-            case 'setUserId':
-                if (a.value) config.onAppStart.push({ type: 'setUserId', value: a.value });
-                break;
-            case 'setEmail':
-                if (a.value) config.onAppStart.push({ type: 'setEmail', value: a.value });
-                break;
-            case 'setTags':
-                if (a.key && a.value) config.onAppStart.push({ type: 'setTags', tags: { [a.key]: a.value } });
-                break;
-            case 'incrementTag':
-                if (a.key) config.onAppStart.push({ type: 'incrementTag', key: a.key, value: Number(a.value) || 1 });
-                break;
-            case 'setLanguage':
-                config.onAppStart.push({ type: 'setLanguage', value: a.value || 'en' });
-                break;
-            case 'startCommunication':
-                config.onAppStart.push({ type: 'startCommunication' });
-                break;
-            case 'stopCommunication':
-                config.onAppStart.push({ type: 'stopCommunication' });
-                break;
-            case 'setReverseProxy':
-                if (a.value) config.onAppStart.push({ type: 'setReverseProxy', value: a.value });
-                break;
+    // Find entry node(s)
+    for (const id in data) {
+        const node = data[id];
+        if (node.name === 'onAppStart') {
+            config.onAppStart = traverseFrom(data, id, 'output_1');
         }
     }
 
     return config;
 }
 
+function traverseFrom(data, nodeId, outputName) {
+    const actions = [];
+    const node = data[nodeId];
+    if (!node) return actions;
+
+    // Find connected nodes from this output
+    const connections = node.outputs[outputName]?.connections || [];
+
+    for (const conn of connections) {
+        const nextNode = data[conn.node];
+        if (!nextNode) continue;
+
+        const def = NODES[nextNode.name];
+        if (!def) continue;
+
+        if (def.conditionType) {
+            // Condition node — branch
+            const condition = {
+                type: 'condition',
+                check: def.conditionType === 'custom' ? (nextNode.data.condTag || 'unknown') : def.conditionType,
+                then: traverseFrom(data, conn.node, 'output_1'),
+                else: traverseFrom(data, conn.node, 'output_2')
+            };
+            actions.push(condition);
+        } else if (def.actionType) {
+            // Action node
+            const action = { type: def.actionType };
+
+            if (def.actionType === 'setTags' && nextNode.data.tagKey) {
+                action.tags = { [nextNode.data.tagKey]: nextNode.data.tagValue || '' };
+            } else if (def.actionType === 'incrementTag') {
+                action.key = nextNode.data.tagKey || '';
+                action.value = Number(nextNode.data.value) || 1;
+            } else if (nextNode.data.value) {
+                action.value = nextNode.data.value;
+            }
+
+            actions.push(action);
+
+            // Continue traversal from this node's output
+            const next = traverseFrom(data, conn.node, 'output_1');
+            actions.push(...next);
+        }
+    }
+
+    return actions;
+}
+
+// ─── Swift Generation ───
 function generateSwift(config) {
     const lines = [
         '// AppDelegate.swift',
         '// Generated by Pushwoosh NoCode Builder',
-        '',
-        'import PushwooshFramework',
-        '',
+        '', 'import PushwooshFramework', '',
         'func application(_ application: UIApplication,',
         '    didFinishLaunchingWithOptions launchOptions:',
         '    [UIApplication.LaunchOptionsKey: Any]?) -> Bool {'
     ];
 
-    for (const a of config.onAppStart) {
-        switch (a.type) {
-            case 'registerForPushNotifications':
-                lines.push('    Pushwoosh.configure.registerForPushNotifications()'); break;
-            case 'setUserId':
-                lines.push(`    Pushwoosh.configure.setUserId("${a.value}")`); break;
-            case 'setEmail':
-                lines.push(`    Pushwoosh.configure.setEmail("${a.value}")`); break;
-            case 'setTags': {
-                const e = Object.entries(a.tags).map(([k,v]) => `"${k}": "${v}"`).join(', ');
-                lines.push(`    Pushwoosh.configure.setTags([${e}])`); break;
-            }
-            case 'incrementTag':
-                lines.push(`    Pushwoosh.configure.setTags(["${a.key}": PWTagsBuilder.incrementalTag(withInteger: ${a.value})])`); break;
-            case 'setLanguage':
-                lines.push(`    Pushwoosh.configure.setLanguage("${a.value}")`); break;
-            case 'startCommunication':
-                lines.push('    Pushwoosh.configure.startServerCommunication()'); break;
-            case 'stopCommunication':
-                lines.push('    Pushwoosh.configure.stopServerCommunication()'); break;
-            case 'setReverseProxy':
-                lines.push(`    Pushwoosh.configure.setReverseProxy("${a.value}")`); break;
-        }
-    }
-
+    renderActions(config.onAppStart, lines, '    ');
     lines.push('    return true');
     lines.push('}');
     return lines.join('\n');
 }
+
+function renderActions(actions, lines, indent) {
+    for (const a of actions) {
+        if (a.type === 'condition') {
+            lines.push(`${indent}// Check: ${a.check}`);
+            lines.push(`${indent}if ${a.check} {`);
+            renderActions(a.then, lines, indent + '    ');
+            lines.push(`${indent}} else {`);
+            renderActions(a.else, lines, indent + '    ');
+            lines.push(`${indent}}`);
+        } else {
+            const swift = actionToSwift(a);
+            if (swift) lines.push(indent + swift);
+        }
+    }
+}
+
+function actionToSwift(a) {
+    switch (a.type) {
+        case 'registerForPushNotifications': return 'Pushwoosh.configure.registerForPushNotifications()';
+        case 'setUserId': return `Pushwoosh.configure.setUserId("${a.value}")`;
+        case 'setEmail': return `Pushwoosh.configure.setEmail("${a.value}")`;
+        case 'setTags': {
+            const e = Object.entries(a.tags).map(([k,v]) => `"${k}": "${v}"`).join(', ');
+            return `Pushwoosh.configure.setTags([${e}])`;
+        }
+        case 'incrementTag':
+            return `Pushwoosh.configure.setTags(["${a.key}": PWTagsBuilder.incrementalTag(withInteger: ${a.value})])`;
+        case 'setLanguage': return `Pushwoosh.configure.setLanguage("${a.value}")`;
+        case 'startCommunication': return 'Pushwoosh.configure.startServerCommunication()';
+        case 'stopCommunication': return 'Pushwoosh.configure.stopServerCommunication()';
+        case 'setReverseProxy': return `Pushwoosh.configure.setReverseProxy("${a.value}")`;
+        default: return null;
+    }
+}
+
+// ─── Preview ───
+let currentTab = 'json';
 
 function updatePreview() {
     const config = generateConfig();
@@ -1010,9 +764,10 @@ function switchTab(tab, btn) {
     updatePreview();
 }
 
+// ─── Actions ───
 function copyCode() {
-    const text = document.getElementById('previewOutput').textContent;
-    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+    navigator.clipboard.writeText(document.getElementById('previewOutput').textContent)
+        .then(() => showToast('Copied to clipboard'));
 }
 
 function downloadJSON() {
@@ -1027,6 +782,14 @@ function downloadJSON() {
     showToast('Downloaded pushwoosh-nocode.json');
 }
 
+function clearCanvas() {
+    editor.clear();
+    const data = {};
+    editor.addNode('onAppStart', 0, 1, 100, 200, 'start', data, buildNodeHTML('onAppStart'));
+    updatePreview();
+    showToast('Canvas cleared');
+}
+
 function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -1034,8 +797,8 @@ function showToast(msg) {
     setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// Init with default "Register Push"
-addAction('registerForPushNotifications');
+// Initial preview
+updatePreview();
 </script>
 
 </body>
