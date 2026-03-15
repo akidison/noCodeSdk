@@ -4,147 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pushwoosh NoCode Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
     <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
     <style>
         :root {
-            --bg: #0d1117; --bg2: #161b22; --bg3: #1c2129;
-            --border: #30363d; --border2: #484f58;
-            --text: #e6edf3; --text2: #8b949e; --text3: #484f58;
-            --green: #2ea44f; --green2: #3fb950;
-            --blue: #1f6feb; --purple: #8957e5; --orange: #d29922;
-            --teal: #3fb4bf; --pink: #db61a2; --red: #f85149; --yellow: #e3b341;
+            --bg: #08090c; --bg2: #111318; --bg3: #191c23;
+            --surface: #1f222b; --surface2: #262a35;
+            --border: rgba(255,255,255,0.05); --border2: rgba(255,255,255,0.09);
+            --border3: rgba(255,255,255,0.14);
+            --text: #eeeef0; --text2: #7c7f8a; --text3: #454852;
+            --green: #22c55e; --green2: #4ade80;
+            --blue: #3b82f6; --purple: #8b5cf6; --orange: #f59e0b;
+            --teal: #14b8a6; --pink: #ec4899; --red: #ef4444; --yellow: #eab308;
+            --r: 10px;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Manrope', system-ui, sans-serif;
             background: var(--bg); color: var(--text);
             height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Header */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* ── Header ── */
         header {
-            background: var(--bg2); border-bottom: 1px solid var(--border);
-            padding: 10px 20px; display: flex; align-items: center;
+            background: rgba(17,19,24,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border2);
+            padding: 0 20px; height: 52px; display: flex; align-items: center;
             justify-content: space-between; flex-shrink: 0; z-index: 20;
         }
-        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
         .logo-icon {
-            width: 30px; height: 30px;
-            background: linear-gradient(135deg, var(--green), var(--green2));
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 16px; color: white;
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
+            border-radius: 7px; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 14px; color: white;
+            box-shadow: 0 0 16px rgba(34,197,94,0.25);
         }
-        .logo h1 { font-size: 16px; font-weight: 600; }
-        .logo h1 span { color: var(--text2); font-weight: 400; }
-        .header-actions { display: flex; gap: 6px; }
+        .logo h1 { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+        .logo h1 span { color: var(--text3); font-weight: 400; margin-left: 2px; }
+        .header-actions { display: flex; gap: 5px; }
 
         .btn {
-            padding: 7px 14px; border-radius: 6px;
-            border: 1px solid var(--border); background: #21262d;
-            color: var(--text); font-size: 12px; font-weight: 500;
-            cursor: pointer; transition: all 0.15s; font-family: inherit;
+            padding: 6px 13px; border-radius: 7px;
+            border: 1px solid var(--border2); background: var(--bg3);
+            color: var(--text2); font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.15s ease; font-family: inherit;
+            letter-spacing: -0.1px;
         }
-        .btn:hover { background: var(--border); }
-        .btn-green { background: var(--green); border-color: var(--green); color: white; }
-        .btn-green:hover { background: var(--green2); }
+        .btn:hover { background: var(--surface); color: var(--text); border-color: var(--border3); }
+        .btn:active { transform: scale(0.97); }
+        .btn-green {
+            background: var(--green); border-color: transparent; color: white;
+            box-shadow: 0 1px 8px rgba(34,197,94,0.2);
+        }
+        .btn-green:hover { background: var(--green2); color: #052e16; box-shadow: 0 2px 16px rgba(34,197,94,0.35); }
+        .btn-blue { background: var(--blue); border-color: transparent; color: white; }
+        .btn-blue:hover { background: #60a5fa; color: #172554; }
+        .btn-purple { background: var(--purple); border-color: transparent; color: white; }
+        .btn-purple:hover { background: #a78bfa; color: #1e1b4b; }
 
         .layout { display: flex; flex: 1; overflow: hidden; }
 
-        /* Palette */
+        /* ── Palette ── */
         .palette {
-            width: 220px; background: var(--bg2);
+            width: 228px; background: var(--bg2);
             border-right: 1px solid var(--border);
             overflow-y: auto; flex-shrink: 0; z-index: 10;
+            padding-bottom: 20px;
         }
         .pal-group {
-            padding: 14px 14px 6px; font-size: 10px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3);
+            padding: 16px 16px 6px; font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.2px; color: var(--text3);
         }
         .pal-item {
             display: flex; align-items: center; gap: 10px;
-            padding: 8px 14px; margin: 2px 6px; border-radius: 8px;
-            cursor: grab; transition: background 0.12s; font-size: 13px; font-weight: 500;
-            user-select: none;
+            padding: 9px 14px; margin: 1px 8px; border-radius: 8px;
+            cursor: grab; transition: all 0.12s ease; font-size: 12.5px; font-weight: 600;
+            user-select: none; color: var(--text2); letter-spacing: -0.1px;
         }
-        .pal-item:hover { background: var(--bg3); }
-        .pal-item:active { cursor: grabbing; }
-        .pal-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+        .pal-item:hover { background: var(--surface); color: var(--text); }
+        .pal-item:active { cursor: grabbing; transform: scale(0.97); }
+        .pal-dot {
+            width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+            box-shadow: 0 0 6px currentColor;
+        }
 
-        /* Drawflow overrides - only colors/backgrounds, NOT positioning */
+        /* ── Drawflow Canvas ── */
         #drawflow {
             flex: 1;
             background: var(--bg);
             background-image:
-                radial-gradient(circle, var(--border) 1px, transparent 1px);
-            background-size: 20px 20px;
+                radial-gradient(circle at 50% 40%, rgba(34,197,94,0.02) 0%, transparent 60%),
+                radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 24px 24px;
         }
 
         .drawflow .drawflow-node {
             background: var(--bg2);
-            border: 2px solid var(--border);
+            border: 1px solid var(--border2);
             border-radius: 12px;
             color: var(--text);
-            min-width: 220px;
+            min-width: 228px;
             width: auto;
             padding: 0;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .drawflow .drawflow-node:hover { border-color: var(--border2); }
-        .drawflow .drawflow-node.selected { border-color: var(--green); }
+        .drawflow .drawflow-node:hover {
+            border-color: var(--border3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .drawflow .drawflow-node.selected {
+            border-color: var(--green);
+            box-shadow: 0 0 0 1px var(--green), 0 0 24px rgba(34,197,94,0.15), 0 8px 32px rgba(0,0,0,0.4);
+        }
 
         .drawflow .drawflow-node .inputs,
-        .drawflow .drawflow-node .outputs {
-            /* Let Drawflow handle positioning — only tweak visuals */
-        }
+        .drawflow .drawflow-node .outputs { }
 
         .drawflow .drawflow-node .input,
         .drawflow .drawflow-node .output {
-            width: 14px; height: 14px;
-            background: var(--border2);
+            width: 12px; height: 12px;
+            background: var(--surface2);
             border: 2px solid var(--bg);
             border-radius: 50%;
+            transition: all 0.15s ease;
         }
         .drawflow .drawflow-node .input:hover,
         .drawflow .drawflow-node .output:hover {
             background: var(--green);
+            box-shadow: 0 0 8px rgba(34,197,94,0.5);
+            transform: scale(1.2);
         }
 
-        /* Condition outputs: first = green (Allowed), second = red (Denied) */
         .drawflow .drawflow-node.condition .output:first-child {
-            background: var(--green2);
+            background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.3);
         }
         .drawflow .drawflow-node.condition .output:last-child {
-            background: var(--red);
+            background: var(--red); box-shadow: 0 0 6px rgba(239,68,68,0.3);
         }
 
         .drawflow .connection .main-path {
-            stroke: var(--border2);
+            stroke: rgba(255,255,255,0.08);
             stroke-width: 2;
             marker-end: url(#arrowhead);
+            transition: stroke 0.15s;
         }
         .drawflow .connection .main-path:hover {
             stroke: var(--green);
-            stroke-width: 3;
+            stroke-width: 2.5;
             marker-end: url(#arrowhead-hover);
+            filter: drop-shadow(0 0 4px rgba(34,197,94,0.3));
         }
         .drawflow .connection.selected .main-path {
             stroke: var(--green);
             marker-end: url(#arrowhead-hover);
+            filter: drop-shadow(0 0 4px rgba(34,197,94,0.3));
         }
 
-        /* Node content styles */
-        .df-node-content {
-            pointer-events: auto;
-        }
+        /* ── Node Content ── */
+        .df-node-content { pointer-events: auto; }
         .df-node-head {
             display: flex; align-items: center; gap: 10px;
-            padding: 10px 14px; font-size: 13px; font-weight: 600;
+            padding: 11px 14px; font-size: 12.5px; font-weight: 700;
             border-bottom: 1px solid var(--border);
+            letter-spacing: -0.2px;
         }
-        .df-node-color { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+        .df-node-color {
+            width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+            box-shadow: 0 0 6px currentColor;
+        }
         .df-node-title { flex: 1; white-space: nowrap; }
         .df-node-type {
-            font-size: 10px; color: var(--text3); font-weight: 500;
+            font-size: 9px; color: var(--text3); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
 
         .df-node-body { padding: 10px 14px; }
@@ -153,154 +195,180 @@
         .df-field { margin-bottom: 8px; }
         .df-field:last-child { margin-bottom: 0; }
         .df-field label {
-            display: block; font-size: 10px; color: var(--text2);
-            margin-bottom: 3px; font-weight: 500;
+            display: block; font-size: 9px; color: var(--text3);
+            margin-bottom: 4px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .df-field input, .df-field select {
-            width: 100%; padding: 6px 9px;
-            background: var(--bg); border: 1px solid var(--border);
+            width: 100%; padding: 7px 10px;
+            background: var(--bg); border: 1px solid var(--border2);
             border-radius: 6px; color: var(--text); font-size: 12px;
-            font-family: inherit; outline: none;
+            font-family: 'JetBrains Mono', monospace; outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
         }
-        .df-field input:focus, .df-field select:focus { border-color: var(--green); }
+        .df-field input:focus, .df-field select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px rgba(34,197,94,0.1);
+        }
         .df-field input::placeholder { color: var(--text3); }
+        .df-field select { cursor: pointer; }
+        .df-field select option { background: var(--bg2); }
 
         .df-field-row { display: flex; gap: 6px; }
         .df-field-row .df-field { flex: 1; margin-bottom: 0; }
 
-        /* Entry node */
-        .drawflow .drawflow-node.entry { border-color: var(--green); }
-        /* Condition node */
-        .drawflow .drawflow-node.condition { border-color: var(--yellow); }
-        .drawflow .drawflow-node.condition .df-node-head { border-bottom-color: rgba(227,179,65,0.2); }
+        /* Entry node — green glow */
+        .drawflow .drawflow-node.entry {
+            border-color: rgba(34,197,94,0.3);
+            box-shadow: 0 0 0 1px rgba(34,197,94,0.1), 0 0 20px rgba(34,197,94,0.06), 0 4px 24px rgba(0,0,0,0.3);
+        }
+        /* Condition node — amber glow */
+        .drawflow .drawflow-node.condition {
+            border-color: rgba(234,179,8,0.3);
+            box-shadow: 0 0 0 1px rgba(234,179,8,0.08), 0 0 20px rgba(234,179,8,0.04), 0 4px 24px rgba(0,0,0,0.3);
+        }
+        .drawflow .drawflow-node.condition .df-node-head { border-bottom-color: rgba(234,179,8,0.1); }
 
-        /* Preview panel */
+        /* ── Preview Panel ── */
         .preview {
             width: 300px; background: var(--bg2);
             border-left: 1px solid var(--border);
             display: flex; flex-direction: column; flex-shrink: 0;
         }
         .preview-head {
-            padding: 10px 14px; border-bottom: 1px solid var(--border);
+            padding: 0 14px; height: 42px; border-bottom: 1px solid var(--border);
             display: flex; align-items: center; justify-content: space-between;
         }
-        .preview-head h2 { font-size: 12px; font-weight: 600; }
+        .preview-head h2 { font-size: 11px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; color: var(--text3); }
         .preview-tabs { display: flex; gap: 2px; }
         .ptab {
-            padding: 3px 8px; border-radius: 4px; border: none;
-            background: transparent; color: var(--text2); font-size: 11px;
-            cursor: pointer; font-family: inherit;
+            padding: 4px 10px; border-radius: 6px; border: none;
+            background: transparent; color: var(--text3); font-size: 11px;
+            cursor: pointer; font-family: inherit; font-weight: 600;
+            transition: all 0.12s;
         }
-        .ptab.active { background: var(--border); color: var(--text); }
-        .preview-code { flex: 1; overflow: auto; padding: 12px; }
+        .ptab:hover { color: var(--text2); }
+        .ptab.active { background: var(--surface); color: var(--text); }
+        .preview-code { flex: 1; overflow: auto; padding: 14px; }
         .preview-code pre {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 11px; line-height: 1.5; white-space: pre-wrap;
-            word-break: break-word; color: #c9d1d9; margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; line-height: 1.6; white-space: pre-wrap;
+            word-break: break-word; color: var(--text2); margin: 0;
         }
         .preview-foot {
             padding: 10px 14px; border-top: 1px solid var(--border);
             display: flex; gap: 6px;
         }
-        .preview-foot .btn { flex: 1; text-align: center; }
+        .preview-foot .btn { flex: 1; text-align: center; font-size: 11px; }
 
+        /* ── Toast ── */
         .toast {
-            position: fixed; bottom: 24px; left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--green); color: white;
-            padding: 10px 20px; border-radius: 8px;
-            font-size: 13px; font-weight: 500;
-            opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none;
+            position: fixed; bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: var(--green); color: #052e16;
+            padding: 10px 24px; border-radius: 100px;
+            font-size: 12px; font-weight: 700; letter-spacing: -0.2px;
+            opacity: 0; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+            z-index: 200; pointer-events: none;
+            box-shadow: 0 4px 24px rgba(34,197,94,0.3);
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* Guide view */
+        /* ── Guide (Preview Panel) ── */
         .guide { font-size: 12px; line-height: 1.6; }
-        .guide-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+        .guide-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
         .guide-node {
-            margin: 3px 0; padding: 7px 10px;
-            background: var(--bg); border: 1px solid var(--border);
-            border-radius: 8px;
+            margin: 3px 0; padding: 8px 10px;
+            background: var(--bg); border: 1px solid var(--border2);
+            border-radius: 8px; transition: border-color 0.15s;
         }
-        .guide-node-head { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 11px; }
-        .guide-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-        .guide-type { font-size: 9px; color: var(--text3); font-weight: 500; margin-left: auto; }
-        .guide-arrow { text-align: center; color: var(--text3); font-size: 10px; padding: 1px 0; }
-        .guide-branch { margin-left: 4px; padding-left: 10px; border-left: 2px solid var(--border); }
-        .guide-branch-label { font-size: 10px; font-weight: 600; padding: 3px 0 1px; }
-        .guide-branch-label.allowed { color: var(--green2); }
+        .guide-node:hover { border-color: var(--border3); }
+        .guide-node-head { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 11px; }
+        .guide-dot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; box-shadow: 0 0 5px currentColor; }
+        .guide-type { font-size: 8px; color: var(--text3); font-weight: 700; margin-left: auto; text-transform: uppercase; letter-spacing: 0.5px; }
+        .guide-arrow { text-align: center; color: var(--text3); font-size: 10px; padding: 1px 0; opacity: 0.5; }
+        .guide-branch { margin-left: 4px; padding-left: 10px; border-left: 2px solid var(--border2); }
+        .guide-branch-label { font-size: 9px; font-weight: 700; padding: 4px 0 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .guide-branch-label.allowed { color: var(--green); }
         .guide-branch-label.denied { color: var(--red); }
         .guide-code-hint {
             margin: 3px 0 3px 8px; padding: 5px 8px;
-            background: rgba(31,111,235,0.08); border: 1px solid rgba(31,111,235,0.15);
-            border-radius: 6px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px;
+            background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.1);
+            border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
             color: var(--blue); word-break: break-all; line-height: 1.4;
         }
         .guide-section {
             margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border);
-            font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px;
+            font-size: 10px; font-weight: 700; color: var(--text2); margin-bottom: 6px;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
         .guide-integration {
-            padding: 6px 8px; margin: 4px 0;
-            background: var(--bg); border-radius: 6px;
-            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px;
-            line-height: 1.4; color: var(--green2);
+            padding: 5px 8px; margin: 4px 0;
+            background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.08);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+            line-height: 1.4; color: var(--green);
         }
-        .guide-note { font-size: 11px; color: var(--text2); margin: 4px 0; line-height: 1.4; }
+        .guide-note { font-size: 11px; color: var(--text3); margin: 4px 0; line-height: 1.4; }
         .guide-empty { color: var(--text3); font-size: 10px; font-style: italic; padding: 2px 0; }
 
-        /* Drag ghost */
+        /* ── Drag Ghost ── */
         .drag-ghost {
             position: fixed; pointer-events: none; z-index: 1000;
-            background: var(--bg2); border: 2px solid var(--green);
-            border-radius: 10px; padding: 8px 14px; font-size: 13px;
-            font-weight: 600; color: var(--text); opacity: 0.9;
+            background: var(--surface); border: 1px solid var(--green);
+            border-radius: 8px; padding: 8px 14px; font-size: 12px;
+            font-weight: 700; color: var(--text); opacity: 0.95;
             display: none; white-space: nowrap;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 12px rgba(34,197,94,0.15);
         }
 
-        /* Zoom controls */
+        /* ── Zoom Controls ── */
         .zoom-controls {
-            position: absolute; bottom: 16px; right: 326px;
-            display: flex; gap: 4px; z-index: 10;
+            position: absolute; bottom: 16px; right: 320px;
+            display: flex; gap: 3px; z-index: 10;
         }
         .zoom-btn {
-            width: 32px; height: 32px; border-radius: 8px;
-            border: 1px solid var(--border); background: var(--bg2);
-            color: var(--text); font-size: 16px; cursor: pointer;
+            width: 30px; height: 30px; border-radius: 8px;
+            border: 1px solid var(--border2); background: var(--bg2);
+            color: var(--text3); font-size: 15px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            transition: all 0.12s;
         }
-        .zoom-btn:hover { background: var(--border); }
+        .zoom-btn:hover { background: var(--surface); color: var(--text); border-color: var(--border3); }
 
-        /* Modal */
+        /* ── Modal ── */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6); z-index: 300;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 300;
             display: flex; align-items: center; justify-content: center;
         }
         .modal {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: 14px; width: 600px; max-height: 80vh;
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 16px; width: 620px; max-height: 80vh;
             display: flex; flex-direction: column;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1);
         }
         .modal-head {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 18px; border-bottom: 1px solid var(--border);
+            padding: 16px 20px; border-bottom: 1px solid var(--border);
         }
-        .modal-head h3 { font-size: 14px; font-weight: 600; }
+        .modal-head h3 { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
         .modal-desc {
-            padding: 10px 18px 0; font-size: 12px; color: var(--text2); line-height: 1.5;
+            padding: 12px 20px 0; font-size: 12px; color: var(--text2); line-height: 1.5;
         }
         .modal-code {
-            flex: 1; overflow: auto; padding: 12px 18px; max-height: 50vh;
+            flex: 1; overflow: auto; padding: 14px 20px; max-height: 50vh;
         }
         .modal-code pre {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 11px; line-height: 1.5; white-space: pre-wrap;
-            word-break: break-word; color: #c9d1d9; margin: 0;
-            background: var(--bg); padding: 12px; border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; line-height: 1.6; white-space: pre-wrap;
+            word-break: break-word; color: var(--text2); margin: 0;
+            background: var(--bg); padding: 14px; border-radius: 10px;
+            border: 1px solid var(--border);
         }
         .modal-foot {
-            padding: 12px 18px; border-top: 1px solid var(--border);
+            padding: 14px 20px; border-top: 1px solid var(--border);
             display: flex; gap: 8px;
         }
 
@@ -322,8 +390,8 @@
         <button class="btn" onclick="clearCanvas()">Clear</button>
         <button class="btn" onclick="copyCode()">Copy</button>
         <button class="btn btn-green" onclick="downloadJSON()">Download JSON</button>
-        <button class="btn" onclick="showPushPayload()" style="background:#1f6feb;border-color:#1f6feb;color:white;">Push Payload</button>
-        <button class="btn" onclick="exportGuide()" style="background:#8957e5;border-color:#8957e5;color:white;">Export Guide</button>
+        <button class="btn btn-blue" onclick="showPushPayload()">Push Payload</button>
+        <button class="btn btn-purple" onclick="exportGuide()">Export Guide</button>
     </div>
 </header>
 
@@ -356,10 +424,10 @@
 <svg style="position:absolute;width:0;height:0;">
     <defs>
         <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#484f58" />
+            <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255,255,255,0.12)" />
         </marker>
         <marker id="arrowhead-hover" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#3fb950" />
+            <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e" />
         </marker>
     </defs>
 </svg>
@@ -438,12 +506,6 @@ const NODE_DEFS = {
         title: 'Reverse Proxy', color: 'var(--red)', category: 'action',
         actionType: 'setReverseProxy', inputs: 1, outputs: 1, fields: [
             { key: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com' }
-        ]
-    },
-    sendBadges: {
-        title: 'Set Badge', color: 'var(--teal)', category: 'action',
-        actionType: 'sendBadges', inputs: 1, outputs: 1, fields: [
-            { key: 'value', label: 'Badge Count', placeholder: '1', inputType: 'number' }
         ]
     },
     registerSms: {
@@ -557,7 +619,7 @@ function buildPalette() {
         'User': ['setUserId', 'setEmail', 'setUser'],
         'Channels': ['registerSms', 'registerWhatsapp'],
         'Tags': ['setTag', 'incrementTag'],
-        'Settings': ['setLanguage', 'sendBadges'],
+        'Settings': ['setLanguage'],
         'Communication': ['startComm', 'stopComm'],
         'Network': ['reverseProxy'],
         'Conditions': ['checkTag']
@@ -787,8 +849,6 @@ function traverseFrom(nodeId, nodes, outputKey) {
                 }
             } else if (def.actionType === 'showPushNotificationAlert') {
                 a.value = targetNode.data.value === 'true';
-            } else if (def.actionType === 'sendBadges') {
-                a.value = Number(targetNode.data.value) || 0;
             } else if (def.dynamic && targetNode.data.source === 'nocode') {
                 a.source = 'nocode';
             } else if (def.dynamic && targetNode.data.source && targetNode.data.source !== 'static') {
@@ -873,7 +933,7 @@ function actionSwift(a) {
         case 'startCommunication': return 'Pushwoosh.configure.startServerCommunication()';
         case 'stopCommunication': return 'Pushwoosh.configure.stopServerCommunication()';
         case 'setReverseProxy': return `Pushwoosh.configure.setReverseProxy("${a.value || ''}")`;
-        case 'sendBadges': return `Pushwoosh.configure.sendBadges(${a.value || 0})`;
+
         case 'registerSmsNumber': return `Pushwoosh.configure.registerSmsNumber("${a.value || ''}")`;
         case 'registerWhatsappNumber': return `Pushwoosh.configure.registerWhatsappNumber("${a.value || ''}")`;
         case 'setUser': return `Pushwoosh.configure.setUser("${a.value || ''}", email: "${a.email || ''}")`;
@@ -960,7 +1020,7 @@ function guideActionLabel(a) {
         'setTags': 'Set Tag: ' + (a.key || '?'), 'incrementTag': 'Increment: ' + (a.key || '?'),
         'setLanguage': 'Language: ' + (a.value || '?'), 'startCommunication': 'Start Communication',
         'stopCommunication': 'Stop Communication', 'setReverseProxy': 'Reverse Proxy',
-        'sendBadges': 'Badge: ' + (a.value || 0), 'registerSmsNumber': 'Register SMS',
+        'registerSmsNumber': 'Register SMS',
         'registerWhatsappNumber': 'Register WhatsApp', 'setUser': 'Set User + Email',
         'unregisterForPushNotifications': 'Unregister Push'
     };
@@ -975,7 +1035,7 @@ function guideActionColor(a) {
     const map = {
         'setEmail':'var(--purple)','setUserId':'var(--purple)','setTags':'var(--orange)',
         'incrementTag':'var(--orange)','setLanguage':'var(--teal)','startCommunication':'var(--pink)',
-        'stopCommunication':'var(--pink)','setReverseProxy':'var(--red)','sendBadges':'var(--teal)',
+        'stopCommunication':'var(--pink)','setReverseProxy':'var(--red)',
         'registerSmsNumber':'var(--purple)','registerWhatsappNumber':'var(--purple)',
         'setUser':'var(--purple)','unregisterForPushNotifications':'var(--red)'
     };
