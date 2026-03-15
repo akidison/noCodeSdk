@@ -4,66 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pushwoosh NoCode Builder</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.59/dist/drawflow.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.59/dist/drawflow.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg: #0d1117;
-            --bg2: #161b22;
-            --bg3: #1c2129;
-            --border: #30363d;
-            --border2: #484f58;
-            --text: #e6edf3;
-            --text2: #8b949e;
-            --text3: #484f58;
-            --green: #2ea44f;
-            --green2: #3fb950;
-            --blue: #1f6feb;
-            --purple: #8957e5;
-            --orange: #d29922;
-            --teal: #3fb4bf;
-            --pink: #db61a2;
-            --red: #f85149;
-            --yellow: #e3b341;
+            --bg: #0d1117; --bg2: #161b22; --bg3: #1c2129;
+            --border: #30363d; --border2: #484f58;
+            --text: #e6edf3; --text2: #8b949e; --text3: #484f58;
+            --green: #2ea44f; --green2: #3fb950;
+            --blue: #1f6feb; --purple: #8957e5; --orange: #d29922;
+            --teal: #3fb4bf; --pink: #db61a2; --red: #f85149; --yellow: #e3b341;
         }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            background: var(--bg); color: var(--text);
+            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
         }
 
         /* Header */
         header {
-            background: var(--bg2);
-            border-bottom: 1px solid var(--border);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            z-index: 20;
+            background: var(--bg2); border-bottom: 1px solid var(--border);
+            padding: 10px 20px; display: flex; align-items: center;
+            justify-content: space-between; flex-shrink: 0; z-index: 20;
         }
-
         .logo { display: flex; align-items: center; gap: 10px; }
-
         .logo-icon {
             width: 30px; height: 30px;
             background: linear-gradient(135deg, var(--green), var(--green2));
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
             font-weight: 700; font-size: 16px; color: white;
         }
-
         .logo h1 { font-size: 16px; font-weight: 600; }
         .logo h1 span { color: var(--text2); font-weight: 400; }
-
         .header-actions { display: flex; gap: 6px; }
 
         .btn {
@@ -75,242 +48,266 @@
         .btn:hover { background: var(--border); }
         .btn-green { background: var(--green); border-color: var(--green); color: white; }
         .btn-green:hover { background: var(--green2); }
-        .btn-blue { background: var(--blue); border-color: var(--blue); color: white; }
-        .btn-blue:hover { background: #388bfd; }
 
-        /* Layout */
         .layout { display: flex; flex: 1; overflow: hidden; }
 
         /* Palette */
         .palette {
-            width: 220px;
-            background: var(--bg2);
+            width: 220px; background: var(--bg2);
             border-right: 1px solid var(--border);
-            overflow-y: auto;
-            flex-shrink: 0;
+            overflow-y: auto; flex-shrink: 0; z-index: 10;
         }
-
-        .palette-group {
-            padding: 12px 12px 4px;
-            font-size: 10px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.8px;
-            color: var(--text3);
+        .pal-group {
+            padding: 14px 14px 6px; font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3);
         }
-
-        .palette-item {
+        .pal-item {
             display: flex; align-items: center; gap: 10px;
-            padding: 9px 14px; margin: 2px 8px;
-            border-radius: 8px; cursor: grab;
-            transition: background 0.12s;
+            padding: 8px 14px; margin: 2px 6px; border-radius: 8px;
+            cursor: grab; transition: background 0.12s; font-size: 13px; font-weight: 500;
+            user-select: none;
         }
-        .palette-item:hover { background: var(--bg3); }
-        .palette-item:active { cursor: grabbing; }
+        .pal-item:hover { background: var(--bg3); }
+        .pal-item:active { cursor: grabbing; }
+        .pal-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 
-        .p-dot {
-            width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+        /* Drawflow overrides - only colors/backgrounds, NOT positioning */
+        #drawflow {
+            flex: 1;
+            background: var(--bg);
+            background-image:
+                radial-gradient(circle, var(--border) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-
-        .palette-item .p-name { font-size: 13px; font-weight: 500; }
-
-        /* Drawflow overrides — dark theme */
-        #drawflow { flex: 1; background: var(--bg); }
 
         .drawflow .drawflow-node {
             background: var(--bg2);
             border: 2px solid var(--border);
             border-radius: 12px;
             color: var(--text);
-            min-width: 200px;
+            min-width: 220px;
+            width: auto;
             padding: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-
         .drawflow .drawflow-node:hover { border-color: var(--border2); }
-        .drawflow .drawflow-node.selected { border-color: var(--green); box-shadow: 0 0 0 2px rgba(46,164,79,0.25); }
+        .drawflow .drawflow-node.selected { border-color: var(--green); }
 
         .drawflow .drawflow-node .inputs,
         .drawflow .drawflow-node .outputs {
-            position: absolute;
+            /* Let Drawflow handle positioning — only tweak visuals */
         }
 
         .drawflow .drawflow-node .input,
         .drawflow .drawflow-node .output {
             width: 14px; height: 14px;
-            background: var(--border);
-            border: 2px solid var(--bg2);
+            background: var(--border2);
+            border: 2px solid var(--bg);
             border-radius: 50%;
         }
-
         .drawflow .drawflow-node .input:hover,
         .drawflow .drawflow-node .output:hover {
             background: var(--green);
         }
 
-        .drawflow .connection .main-path {
-            stroke: var(--border);
-            stroke-width: 2;
+        /* Condition outputs: first = green (Allowed), second = red (Denied) */
+        .drawflow .drawflow-node.condition .output:first-child {
+            background: var(--green2);
+        }
+        .drawflow .drawflow-node.condition .output:last-child {
+            background: var(--red);
         }
 
+        .drawflow .connection .main-path {
+            stroke: var(--border2);
+            stroke-width: 2;
+            marker-end: url(#arrowhead);
+        }
         .drawflow .connection .main-path:hover {
             stroke: var(--green);
+            stroke-width: 3;
+            marker-end: url(#arrowhead-hover);
+        }
+        .drawflow .connection.selected .main-path {
+            stroke: var(--green);
+            marker-end: url(#arrowhead-hover);
         }
 
-        .drawflow .drawflow-delete {
-            background: var(--red);
-            color: white;
-            border: none;
-            border-radius: 50%;
+        /* Node content styles */
+        .df-node-content {
+            pointer-events: auto;
         }
-
-        /* Custom node styles */
-        .node-header {
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 14px;
-            font-size: 13px; font-weight: 600;
+        .df-node-head {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; font-size: 13px; font-weight: 600;
             border-bottom: 1px solid var(--border);
         }
-
-        .node-dot {
-            width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+        .df-node-color { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+        .df-node-title { flex: 1; white-space: nowrap; }
+        .df-node-type {
+            font-size: 10px; color: var(--text3); font-weight: 500;
         }
 
-        .node-body {
-            padding: 10px 14px;
-        }
+        .df-node-body { padding: 10px 14px; }
+        .df-node-body:empty { display: none; }
 
-        .node-body:empty { display: none; }
-
-        .node-field {
-            margin-bottom: 8px;
-        }
-        .node-field:last-child { margin-bottom: 0; }
-
-        .node-field label {
+        .df-field { margin-bottom: 8px; }
+        .df-field:last-child { margin-bottom: 0; }
+        .df-field label {
             display: block; font-size: 10px; color: var(--text2);
             margin-bottom: 3px; font-weight: 500;
         }
-
-        .node-field input, .node-field select {
-            width: 100%; padding: 6px 10px;
+        .df-field input, .df-field select {
+            width: 100%; padding: 6px 9px;
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 6px; color: var(--text);
-            font-size: 12px; font-family: inherit; outline: none;
+            border-radius: 6px; color: var(--text); font-size: 12px;
+            font-family: inherit; outline: none;
         }
+        .df-field input:focus, .df-field select:focus { border-color: var(--green); }
+        .df-field input::placeholder { color: var(--text3); }
 
-        .node-field input:focus, .node-field select:focus {
-            border-color: var(--green);
-        }
+        .df-field-row { display: flex; gap: 6px; }
+        .df-field-row .df-field { flex: 1; margin-bottom: 0; }
 
-        .node-field input::placeholder { color: var(--text3); }
+        /* Entry node */
+        .drawflow .drawflow-node.entry { border-color: var(--green); }
+        /* Condition node */
+        .drawflow .drawflow-node.condition { border-color: var(--yellow); }
+        .drawflow .drawflow-node.condition .df-node-head { border-bottom-color: rgba(227,179,65,0.2); }
 
-        .node-field-row {
-            display: flex; gap: 6px;
-        }
-        .node-field-row .node-field { flex: 1; margin-bottom: 0; }
-
-        /* Condition node special styling */
-        .drawflow .drawflow-node.condition {
-            border-color: var(--yellow);
-            background: linear-gradient(180deg, #1a1800, var(--bg2));
-        }
-
-        .drawflow .drawflow-node.condition .outputs {
-            display: flex;
-        }
-
-        .condition-outputs {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 14px 10px;
-            font-size: 10px;
-            color: var(--text2);
-        }
-
-        .condition-outputs span { font-weight: 600; }
-        .cond-yes { color: var(--green2); }
-        .cond-no { color: var(--red); }
-
-        /* Start node special */
-        .drawflow .drawflow-node.start {
-            border-color: var(--green);
-            background: linear-gradient(180deg, #0d1f0d, var(--bg2));
-        }
-
-        /* Right Panel */
-        .preview-panel {
-            width: 300px;
-            background: var(--bg2);
+        /* Preview panel */
+        .preview {
+            width: 300px; background: var(--bg2);
             border-left: 1px solid var(--border);
-            display: flex; flex-direction: column;
-            flex-shrink: 0;
+            display: flex; flex-direction: column; flex-shrink: 0;
         }
-
-        .preview-header {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center;
-            justify-content: space-between;
+        .preview-head {
+            padding: 10px 14px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        .preview-header h2 { font-size: 12px; font-weight: 600; }
-
+        .preview-head h2 { font-size: 12px; font-weight: 600; }
         .preview-tabs { display: flex; gap: 2px; }
-
-        .preview-tab {
-            padding: 3px 8px; border-radius: 4px;
-            border: none; background: transparent;
-            color: var(--text2); font-size: 11px;
+        .ptab {
+            padding: 3px 8px; border-radius: 4px; border: none;
+            background: transparent; color: var(--text2); font-size: 11px;
             cursor: pointer; font-family: inherit;
         }
-        .preview-tab.active { background: var(--border); color: var(--text); }
-
-        .preview-code {
-            flex: 1; overflow: auto; padding: 12px;
-        }
-
+        .ptab.active { background: var(--border); color: var(--text); }
+        .preview-code { flex: 1; overflow: auto; padding: 12px; }
         .preview-code pre {
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 11px; line-height: 1.5;
-            white-space: pre-wrap; word-break: break-word;
-            color: #c9d1d9; margin: 0;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11px; line-height: 1.5; white-space: pre-wrap;
+            word-break: break-word; color: #c9d1d9; margin: 0;
         }
-
-        .preview-footer {
-            padding: 10px 14px;
-            border-top: 1px solid var(--border);
+        .preview-foot {
+            padding: 10px 14px; border-top: 1px solid var(--border);
             display: flex; gap: 6px;
         }
-        .preview-footer .btn { flex: 1; text-align: center; }
+        .preview-foot .btn { flex: 1; text-align: center; }
 
-        /* Toast */
         .toast {
             position: fixed; bottom: 24px; left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: var(--green); color: white;
             padding: 10px 20px; border-radius: 8px;
             font-size: 13px; font-weight: 500;
-            opacity: 0; transition: all 0.3s;
-            z-index: 200; pointer-events: none;
+            opacity: 0; transition: all 0.3s; z-index: 200; pointer-events: none;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+        /* Guide view */
+        .guide { font-size: 12px; line-height: 1.6; }
+        .guide-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+        .guide-node {
+            margin: 3px 0; padding: 7px 10px;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        .guide-node-head { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 11px; }
+        .guide-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+        .guide-type { font-size: 9px; color: var(--text3); font-weight: 500; margin-left: auto; }
+        .guide-arrow { text-align: center; color: var(--text3); font-size: 10px; padding: 1px 0; }
+        .guide-branch { margin-left: 4px; padding-left: 10px; border-left: 2px solid var(--border); }
+        .guide-branch-label { font-size: 10px; font-weight: 600; padding: 3px 0 1px; }
+        .guide-branch-label.allowed { color: var(--green2); }
+        .guide-branch-label.denied { color: var(--red); }
+        .guide-code-hint {
+            margin: 3px 0 3px 8px; padding: 5px 8px;
+            background: rgba(31,111,235,0.08); border: 1px solid rgba(31,111,235,0.15);
+            border-radius: 6px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px;
+            color: var(--blue); word-break: break-all; line-height: 1.4;
+        }
+        .guide-section {
+            margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border);
+            font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px;
+        }
+        .guide-integration {
+            padding: 6px 8px; margin: 4px 0;
+            background: var(--bg); border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10px;
+            line-height: 1.4; color: var(--green2);
+        }
+        .guide-note { font-size: 11px; color: var(--text2); margin: 4px 0; line-height: 1.4; }
+        .guide-empty { color: var(--text3); font-size: 10px; font-style: italic; padding: 2px 0; }
+
+        /* Drag ghost */
+        .drag-ghost {
+            position: fixed; pointer-events: none; z-index: 1000;
+            background: var(--bg2); border: 2px solid var(--green);
+            border-radius: 10px; padding: 8px 14px; font-size: 13px;
+            font-weight: 600; color: var(--text); opacity: 0.9;
+            display: none; white-space: nowrap;
+        }
+
         /* Zoom controls */
         .zoom-controls {
-            position: absolute; bottom: 16px; left: 236px;
+            position: absolute; bottom: 16px; right: 326px;
             display: flex; gap: 4px; z-index: 10;
         }
         .zoom-btn {
-            width: 32px; height: 32px;
-            border-radius: 8px; border: 1px solid var(--border);
-            background: var(--bg2); color: var(--text);
-            font-size: 16px; cursor: pointer;
+            width: 32px; height: 32px; border-radius: 8px;
+            border: 1px solid var(--border); background: var(--bg2);
+            color: var(--text); font-size: 16px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
         }
-        .zoom-btn:hover { background: var(--bg3); }
+        .zoom-btn:hover { background: var(--border); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); z-index: 300;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 14px; width: 600px; max-height: 80vh;
+            display: flex; flex-direction: column;
+        }
+        .modal-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 18px; border-bottom: 1px solid var(--border);
+        }
+        .modal-head h3 { font-size: 14px; font-weight: 600; }
+        .modal-desc {
+            padding: 10px 18px 0; font-size: 12px; color: var(--text2); line-height: 1.5;
+        }
+        .modal-code {
+            flex: 1; overflow: auto; padding: 12px 18px; max-height: 50vh;
+        }
+        .modal-code pre {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11px; line-height: 1.5; white-space: pre-wrap;
+            word-break: break-word; color: #c9d1d9; margin: 0;
+            background: var(--bg); padding: 12px; border-radius: 8px;
+        }
+        .modal-foot {
+            padding: 12px 18px; border-top: 1px solid var(--border);
+            display: flex; gap: 8px;
+        }
 
         @media (max-width: 900px) {
-            .preview-panel { display: none; }
+            .preview { display: none; }
             .palette { width: 180px; }
+            .zoom-controls { right: 16px; }
         }
     </style>
 </head>
@@ -323,95 +320,27 @@
     </div>
     <div class="header-actions">
         <button class="btn" onclick="clearCanvas()">Clear</button>
-        <button class="btn btn-blue" onclick="copyCode()">Copy</button>
+        <button class="btn" onclick="copyCode()">Copy</button>
         <button class="btn btn-green" onclick="downloadJSON()">Download JSON</button>
+        <button class="btn" onclick="showPushPayload()" style="background:#1f6feb;border-color:#1f6feb;color:white;">Push Payload</button>
+        <button class="btn" onclick="exportGuide()" style="background:#8957e5;border-color:#8957e5;color:white;">Export Guide</button>
     </div>
 </header>
 
 <div class="layout">
-    <!-- Palette -->
-    <div class="palette">
-        <div class="palette-group">Entry</div>
-        <div class="palette-item" draggable="true" data-node="onAppStart">
-            <div class="p-dot" style="background:var(--green)"></div>
-            <span class="p-name">On App Start</span>
-        </div>
-
-        <div class="palette-group">Push</div>
-        <div class="palette-item" draggable="true" data-node="registerPush">
-            <div class="p-dot" style="background:var(--blue)"></div>
-            <span class="p-name">Register for Push</span>
-        </div>
-
-        <div class="palette-group">User</div>
-        <div class="palette-item" draggable="true" data-node="setUserId">
-            <div class="p-dot" style="background:var(--purple)"></div>
-            <span class="p-name">Set User ID</span>
-        </div>
-        <div class="palette-item" draggable="true" data-node="setEmail">
-            <div class="p-dot" style="background:var(--purple)"></div>
-            <span class="p-name">Set Email</span>
-        </div>
-
-        <div class="palette-group">Tags</div>
-        <div class="palette-item" draggable="true" data-node="setTag">
-            <div class="p-dot" style="background:var(--orange)"></div>
-            <span class="p-name">Set Tag</span>
-        </div>
-        <div class="palette-item" draggable="true" data-node="incrementTag">
-            <div class="p-dot" style="background:var(--orange)"></div>
-            <span class="p-name">Increment Tag</span>
-        </div>
-
-        <div class="palette-group">Settings</div>
-        <div class="palette-item" draggable="true" data-node="setLanguage">
-            <div class="p-dot" style="background:var(--teal)"></div>
-            <span class="p-name">Set Language</span>
-        </div>
-
-        <div class="palette-group">Communication</div>
-        <div class="palette-item" draggable="true" data-node="startComm">
-            <div class="p-dot" style="background:var(--pink)"></div>
-            <span class="p-name">Start Communication</span>
-        </div>
-        <div class="palette-item" draggable="true" data-node="stopComm">
-            <div class="p-dot" style="background:var(--pink)"></div>
-            <span class="p-name">Stop Communication</span>
-        </div>
-
-        <div class="palette-group">Network</div>
-        <div class="palette-item" draggable="true" data-node="reverseProxy">
-            <div class="p-dot" style="background:var(--red)"></div>
-            <span class="p-name">Reverse Proxy</span>
-        </div>
-
-        <div class="palette-group">Conditions</div>
-        <div class="palette-item" draggable="true" data-node="checkPushPermission">
-            <div class="p-dot" style="background:var(--yellow)"></div>
-            <span class="p-name">Push Permission?</span>
-        </div>
-        <div class="palette-item" draggable="true" data-node="checkCondition">
-            <div class="p-dot" style="background:var(--yellow)"></div>
-            <span class="p-name">Custom Condition</span>
-        </div>
-    </div>
-
-    <!-- Canvas -->
+    <div class="palette" id="palette"></div>
     <div id="drawflow"></div>
-
-    <!-- Preview Panel -->
-    <div class="preview-panel">
-        <div class="preview-header">
+    <div class="preview">
+        <div class="preview-head">
             <h2>Generated Config</h2>
             <div class="preview-tabs">
-                <button class="preview-tab active" onclick="switchTab('json', this)">JSON</button>
-                <button class="preview-tab" onclick="switchTab('swift', this)">Swift</button>
+                <button class="ptab active" onclick="switchTab('json',this)">JSON</button>
+                <button class="ptab" onclick="switchTab('swift',this)">Swift</button>
+                <button class="ptab" onclick="switchTab('guide',this)">Guide</button>
             </div>
         </div>
-        <div class="preview-code">
-            <pre id="previewOutput"></pre>
-        </div>
-        <div class="preview-footer">
+        <div class="preview-code"><pre id="output"></pre><div id="guideOutput" style="display:none;"></div></div>
+        <div class="preview-foot">
             <button class="btn" onclick="copyCode()">Copy</button>
             <button class="btn btn-green" onclick="downloadJSON()">Download</button>
         </div>
@@ -419,201 +348,321 @@
 </div>
 
 <div class="zoom-controls">
+    <button class="zoom-btn" onclick="editor.zoom_out()">−</button>
+    <button class="zoom-btn" onclick="editor.zoom_reset()">⊙</button>
     <button class="zoom-btn" onclick="editor.zoom_in()">+</button>
-    <button class="zoom-btn" onclick="editor.zoom_out()">&minus;</button>
-    <button class="zoom-btn" onclick="editor.zoom_reset()">&#8634;</button>
 </div>
 
+<svg style="position:absolute;width:0;height:0;">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#484f58" />
+        </marker>
+        <marker id="arrowhead-hover" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#3fb950" />
+        </marker>
+    </defs>
+</svg>
+<!-- Push Payload Modal -->
+<div class="modal-overlay" id="pushModal" style="display:none;">
+    <div class="modal">
+        <div class="modal-head">
+            <h3>Silent Push Payload</h3>
+            <button class="node-del" onclick="closePushModal()" style="font-size:20px;">&times;</button>
+        </div>
+        <p class="modal-desc">Send this as a silent push via Pushwoosh API to update NoCode config on all devices.</p>
+        <div class="modal-code"><pre id="pushPayload"></pre></div>
+        <div class="modal-foot">
+            <button class="btn" onclick="copyPushPayload()">Copy Payload</button>
+            <button class="btn" onclick="copyCurl()">Copy cURL</button>
+        </div>
+    </div>
+</div>
+
+<div class="drag-ghost" id="dragGhost"></div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── Node definitions ───
-const NODES = {
-    onAppStart: {
-        title: 'On App Start',
-        color: 'var(--green)',
-        inputs: 0, outputs: 1,
-        cls: 'start',
-        fields: []
-    },
+// ─── Node Definitions ───
+const NODE_DEFS = {
+    // Actions
     registerPush: {
-        title: 'Register for Push',
-        color: 'var(--blue)',
-        inputs: 1, outputs: 1,
-        actionType: 'registerForPushNotifications',
-        fields: []
+        title: 'Register for Push', color: 'var(--blue)', category: 'condition',
+        actionType: 'registerForPushNotifications', checkType: 'pushPermissionGranted',
+        inputs: 1, outputs: 2, outputLabels: ['Allowed', 'Denied'], fields: []
     },
     setUserId: {
-        title: 'Set User ID',
-        color: 'var(--purple)',
-        inputs: 1, outputs: 1,
-        actionType: 'setUserId',
-        fields: [{ key: 'value', label: 'User ID', placeholder: 'user_123' }]
+        title: 'Set User ID', color: 'var(--purple)', category: 'action',
+        actionType: 'setUserId', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value'],['userDefaults','UserDefaults Key'],['infoPlist','Info.plist Key']] },
+            { key: 'value', label: 'Value / Key', placeholder: 'user_123' }
+        ]
     },
     setEmail: {
-        title: 'Set Email',
-        color: 'var(--purple)',
-        inputs: 1, outputs: 1,
-        actionType: 'setEmail',
-        fields: [{ key: 'value', label: 'Email', placeholder: 'user@example.com' }]
+        title: 'Set Email', color: 'var(--purple)', category: 'action',
+        actionType: 'setEmail', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value'],['userDefaults','UserDefaults Key'],['infoPlist','Info.plist Key']] },
+            { key: 'value', label: 'Value / Key', placeholder: 'user@example.com' }
+        ]
     },
     setTag: {
-        title: 'Set Tag',
-        color: 'var(--orange)',
-        inputs: 1, outputs: 1,
-        actionType: 'setTags',
-        fields: [
-            { key: 'tagKey', label: 'Tag Name', placeholder: 'category', half: true },
-            { key: 'tagValue', label: 'Value', placeholder: 'premium', half: true }
+        title: 'Set Tag', color: 'var(--orange)', category: 'action',
+        actionType: 'setTags', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'tagKey', label: 'Tag Name', placeholder: 'category' },
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value'],['userDefaults','UserDefaults Key'],['infoPlist','Info.plist Key']] },
+            { key: 'tagValue', label: 'Value', placeholder: 'premium' }
         ]
     },
     incrementTag: {
-        title: 'Increment Tag',
-        color: 'var(--orange)',
-        inputs: 1, outputs: 1,
-        actionType: 'incrementTag',
-        fields: [
+        title: 'Increment Tag', color: 'var(--orange)', category: 'action',
+        actionType: 'incrementTag', inputs: 1, outputs: 1, fields: [
             { key: 'tagKey', label: 'Tag Name', placeholder: 'app_opens', half: true },
-            { key: 'value', label: 'By', placeholder: '1', type: 'number', half: true }
+            { key: 'value', label: 'By', placeholder: '1', inputType: 'number', half: true }
         ]
     },
     setLanguage: {
-        title: 'Set Language',
-        color: 'var(--teal)',
-        inputs: 1, outputs: 1,
-        actionType: 'setLanguage',
-        fields: [{
-            key: 'value', label: 'Language', type: 'select',
-            options: [['en','English'],['es','Spanish'],['fr','French'],['de','German'],
-                      ['pt','Portuguese'],['ru','Russian'],['zh','Chinese'],['ja','Japanese'],
-                      ['ko','Korean'],['ar','Arabic']]
-        }]
+        title: 'Set Language', color: 'var(--teal)', category: 'action',
+        actionType: 'setLanguage', inputs: 1, outputs: 1, fields: [
+            { key: 'value', label: 'Language', type: 'select', options: [['en','English'],['es','Spanish'],['fr','French'],['de','German'],['pt','Portuguese'],['ru','Russian'],['zh','Chinese'],['ja','Japanese']] }
+        ]
     },
     startComm: {
-        title: 'Start Communication',
-        color: 'var(--pink)',
-        inputs: 1, outputs: 1,
-        actionType: 'startCommunication',
-        fields: []
+        title: 'Start Communication', color: 'var(--pink)', category: 'action',
+        actionType: 'startCommunication', inputs: 1, outputs: 1, fields: []
     },
     stopComm: {
-        title: 'Stop Communication',
-        color: 'var(--pink)',
-        inputs: 1, outputs: 1,
-        actionType: 'stopCommunication',
-        fields: []
+        title: 'Stop Communication', color: 'var(--pink)', category: 'action',
+        actionType: 'stopCommunication', inputs: 1, outputs: 1, fields: []
     },
     reverseProxy: {
-        title: 'Reverse Proxy',
-        color: 'var(--red)',
-        inputs: 1, outputs: 1,
-        actionType: 'setReverseProxy',
-        fields: [{ key: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com' }]
+        title: 'Reverse Proxy', color: 'var(--red)', category: 'action',
+        actionType: 'setReverseProxy', inputs: 1, outputs: 1, fields: [
+            { key: 'value', label: 'Proxy URL', placeholder: 'https://proxy.example.com' }
+        ]
     },
-    checkPushPermission: {
-        title: 'Push Permission?',
-        color: 'var(--yellow)',
-        inputs: 1, outputs: 2,
-        cls: 'condition',
-        conditionType: 'pushPermissionGranted',
-        fields: []
+    sendBadges: {
+        title: 'Set Badge', color: 'var(--teal)', category: 'action',
+        actionType: 'sendBadges', inputs: 1, outputs: 1, fields: [
+            { key: 'value', label: 'Badge Count', placeholder: '1', inputType: 'number' }
+        ]
     },
-    checkCondition: {
-        title: 'Custom Condition',
-        color: 'var(--yellow)',
-        inputs: 1, outputs: 2,
-        cls: 'condition',
-        conditionType: 'custom',
+    registerSms: {
+        title: 'Register SMS', color: 'var(--purple)', category: 'action',
+        actionType: 'registerSmsNumber', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value'],['userDefaults','UserDefaults Key'],['infoPlist','Info.plist Key']] },
+            { key: 'value', label: 'Value / Key', placeholder: '+1234567890' }
+        ]
+    },
+    registerWhatsapp: {
+        title: 'Register WhatsApp', color: 'var(--purple)', category: 'action',
+        actionType: 'registerWhatsappNumber', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value'],['userDefaults','UserDefaults Key'],['infoPlist','Info.plist Key']] },
+            { key: 'value', label: 'Value / Key', placeholder: '+1234567890' }
+        ]
+    },
+    setUser: {
+        title: 'Set User + Email', color: 'var(--purple)', category: 'action',
+        actionType: 'setUser', dynamic: true, inputs: 1, outputs: 1, fields: [
+            { key: 'source', label: 'Source', type: 'select', options: [['nocode','From App (recommended)'],['static','Static Value']] },
+            { key: 'value', label: 'User ID', placeholder: 'user_123' },
+            { key: 'email', label: 'Email', placeholder: 'user@example.com' }
+        ]
+    },
+    unregisterPush: {
+        title: 'Unregister Push', color: 'var(--red)', category: 'action',
+        actionType: 'unregisterForPushNotifications', inputs: 1, outputs: 1, fields: []
+    },
+
+    // Conditions
+    checkTag: {
+        title: 'Check Tag', color: 'var(--yellow)', category: 'condition',
+        checkType: 'custom', inputs: 1, outputs: 2,
+        outputLabels: ['True', 'False'],
         fields: [{ key: 'condTag', label: 'Tag to check', placeholder: 'is_premium' }]
+    },
+
+    // Entry
+    appStart: {
+        title: 'On App Start', color: 'var(--green)', category: 'entry',
+        inputs: 0, outputs: 1, fields: []
     }
 };
 
-// ─── Build node HTML ───
-function buildNodeHTML(type) {
-    const def = NODES[type];
-    let html = `<div class="node-header"><div class="node-dot" style="background:${def.color}"></div>${def.title}</div>`;
-
-    if (def.fields.length > 0) {
-        html += '<div class="node-body">';
-        const hasHalf = def.fields.some(f => f.half);
-        if (hasHalf) {
-            html += '<div class="node-field-row">';
-            for (const f of def.fields) html += buildFieldHTML(f);
-            html += '</div>';
-        } else {
-            for (const f of def.fields) html += buildFieldHTML(f);
-        }
-        html += '</div>';
-    }
-
-    if (def.outputs === 2) {
-        html += '<div class="condition-outputs"><span class="cond-yes">Yes</span><span class="cond-no">No</span></div>';
-    }
-
-    return html;
-}
-
-function buildFieldHTML(f) {
-    if (f.type === 'select') {
-        const opts = f.options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
-        return `<div class="node-field"><label>${f.label}</label><select df-${f.key}>${opts}</select></div>`;
-    }
-    return `<div class="node-field"><label>${f.label}</label><input type="${f.type || 'text'}" df-${f.key} placeholder="${f.placeholder || ''}"></div>`;
-}
-
-// ─── Initialize Drawflow ───
-const el = document.getElementById('drawflow');
-const editor = new Drawflow(el);
+// ─── Init Drawflow ───
+const dfContainer = document.getElementById('drawflow');
+const editor = new Drawflow(dfContainer);
 editor.reroute = true;
-editor.curvature = 0.5;
+editor.reroute_fix_curvature = true;
+editor.force_first_input = false;
+
+// Register node templates
+for (const [key, def] of Object.entries(NODE_DEFS)) {
+    editor.registerNode(key, buildNodeHTML(key, def));
+}
+
 editor.start();
 
-// ─── Add default "On App Start" node ───
-const startData = {};
-NODES.onAppStart.fields.forEach(f => startData[f.key] = '');
-editor.addNode('onAppStart', 0, 1, 100, 200, 'start', startData, buildNodeHTML('onAppStart'));
+// Add default entry node
+const entryId = editor.addNode('appStart', 0, 1, 80, 200, 'entry', {}, buildNodeHTML('appStart', NODE_DEFS.appStart));
 
-// ─── Drag from palette ───
-let dragNodeType = null;
+// ─── Build Node HTML ───
+function buildNodeHTML(key, def) {
+    let fieldsHTML = '';
+    if (def.fields.length > 0) {
+        const hasHalf = def.fields.some(f => f.half);
+        fieldsHTML = '<div class="df-node-body">';
+        if (hasHalf) {
+            fieldsHTML += '<div class="df-field-row">';
+            def.fields.forEach(f => { fieldsHTML += buildFieldHTML(f, key); });
+            fieldsHTML += '</div>';
+        } else {
+            def.fields.forEach(f => { fieldsHTML += buildFieldHTML(f, key); });
+        }
+        fieldsHTML += '</div>';
+    }
 
-document.querySelectorAll('.palette-item').forEach(item => {
-    item.addEventListener('dragstart', e => {
-        dragNodeType = item.dataset.node;
-        e.dataTransfer.effectAllowed = 'move';
-    });
-    item.addEventListener('dragend', () => { dragNodeType = null; });
+    let outputLabelsHTML = '';
+    if (def.outputLabels) {
+        outputLabelsHTML = `<div style="display:flex;justify-content:space-between;padding:4px 14px 6px;font-size:10px;font-weight:600;">
+            <span style="color:var(--green2)">${def.outputLabels[0]}</span>
+            <span style="color:var(--red)">${def.outputLabels[1]}</span>
+        </div>`;
+    }
+
+    return `<div class="df-node-content">
+        <div class="df-node-head">
+            <div class="df-node-color" style="background:${def.color}"></div>
+            <div class="df-node-title">${def.title}</div>
+            <div class="df-node-type">${def.category === 'condition' ? 'CONDITION' : def.category === 'entry' ? 'START' : 'ACTION'}</div>
+        </div>
+        ${fieldsHTML}
+        ${outputLabelsHTML}
+    </div>`;
+}
+
+function buildFieldHTML(f, nodeKey) {
+    const dfKey = `df-${f.key}`;
+    if (f.type === 'select') {
+        const opts = f.options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+        return `<div class="df-field"><label>${f.label}</label><select df-${f.key}>${opts}</select></div>`;
+    }
+    return `<div class="df-field"><label>${f.label}</label><input type="${f.inputType || 'text'}" df-${f.key} placeholder="${f.placeholder || ''}"></div>`;
+}
+
+// ─── Palette ───
+function buildPalette() {
+    const p = document.getElementById('palette');
+    const groups = {
+        'Push': ['registerPush', 'unregisterPush'],
+        'User': ['setUserId', 'setEmail', 'setUser'],
+        'Channels': ['registerSms', 'registerWhatsapp'],
+        'Tags': ['setTag', 'incrementTag'],
+        'Settings': ['setLanguage', 'sendBadges'],
+        'Communication': ['startComm', 'stopComm'],
+        'Network': ['reverseProxy'],
+        'Conditions': ['checkTag']
+    };
+
+    for (const [name, keys] of Object.entries(groups)) {
+        const g = document.createElement('div');
+        g.className = 'pal-group';
+        g.textContent = name;
+        p.appendChild(g);
+
+        for (const k of keys) {
+            const def = NODE_DEFS[k];
+            const item = document.createElement('div');
+            item.className = 'pal-item';
+            item.setAttribute('draggable', 'true');
+            item.dataset.nodeType = k;
+            item.innerHTML = `<div class="pal-dot" style="background:${def.color}"></div>${def.title}`;
+
+            item.addEventListener('dragstart', onDragStart);
+            item.addEventListener('dragend', onDragEnd);
+
+            p.appendChild(item);
+        }
+    }
+}
+
+// ─── Drag & Drop ───
+let dragType = null;
+const ghost = document.getElementById('dragGhost');
+
+function onDragStart(e) {
+    dragType = e.target.dataset.nodeType;
+    const def = NODE_DEFS[dragType];
+    ghost.innerHTML = `<div class="pal-dot" style="background:${def.color};display:inline-block;margin-right:8px;width:10px;height:10px;border-radius:3px;vertical-align:middle;"></div>${def.title}`;
+    ghost.style.display = 'block';
+
+    // Use a transparent pixel as drag image
+    const img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    e.dataTransfer.setDragImage(img, 0, 0);
+    e.dataTransfer.setData('text/plain', dragType);
+}
+
+function onDragEnd(e) {
+    ghost.style.display = 'none';
+    dragType = null;
+}
+
+document.addEventListener('dragover', (e) => {
+    if (dragType) {
+        e.preventDefault();
+        ghost.style.left = (e.clientX + 12) + 'px';
+        ghost.style.top = (e.clientY + 12) + 'px';
+    }
 });
 
-el.addEventListener('drop', e => {
+dfContainer.addEventListener('drop', (e) => {
     e.preventDefault();
-    if (!dragNodeType || !NODES[dragNodeType]) return;
+    ghost.style.display = 'none';
+    if (!dragType) return;
 
-    const def = NODES[dragNodeType];
-    const data = {};
-    def.fields.forEach(f => {
-        data[f.key] = f.type === 'select' ? f.options[0][0] : '';
-    });
+    const def = NODE_DEFS[dragType];
+    if (!def) return;
 
-    const rect = el.getBoundingClientRect();
+    // Calculate position in Drawflow canvas coordinates
+    const rect = dfContainer.getBoundingClientRect();
     const zoom = editor.zoom;
     const x = (e.clientX - rect.left - editor.precanvas.getBoundingClientRect().left + rect.left) / zoom;
     const y = (e.clientY - rect.top - editor.precanvas.getBoundingClientRect().top + rect.top) / zoom;
 
+    const cssClass = def.category === 'condition' ? 'condition' : (def.category === 'entry' ? 'entry' : '');
+
     editor.addNode(
-        dragNodeType,
+        dragType,
         def.inputs,
         def.outputs,
-        x, y,
-        def.cls || '',
-        data,
-        buildNodeHTML(dragNodeType)
+        x - 110,
+        y - 30,
+        cssClass,
+        {},
+        buildNodeHTML(dragType, def)
     );
 
-    dragNodeType = null;
     updatePreview();
+    dragType = null;
 });
 
-el.addEventListener('dragover', e => { e.preventDefault(); });
+dfContainer.addEventListener('dragover', (e) => { e.preventDefault(); });
+
+// ─── Double-click palette item to add ───
+document.querySelectorAll('.pal-item').forEach(item => {
+    item.addEventListener('dblclick', () => {
+        const k = item.dataset.nodeType;
+        const def = NODE_DEFS[k];
+        const cssClass = def.category === 'condition' ? 'condition' : '';
+        editor.addNode(
+            k, def.inputs, def.outputs,
+            300 + Math.random() * 200, 200 + Math.random() * 300,
+            cssClass, {},
+            buildNodeHTML(k, def)
+        );
+        updatePreview();
+    });
+});
 
 // ─── Events ───
 editor.on('nodeCreated', () => updatePreview());
@@ -622,184 +671,615 @@ editor.on('connectionCreated', () => updatePreview());
 editor.on('connectionRemoved', () => updatePreview());
 editor.on('nodeMoved', () => updatePreview());
 
-// Intercept input changes inside nodes
-el.addEventListener('input', e => {
-    if (e.target.matches('.node-field input, .node-field select')) {
-        // Drawflow syncs df-* attributes automatically
-        setTimeout(updatePreview, 50);
+// ─── Delete key removes selected connection or node ───
+let selectedConnection = null;
+
+editor.on('connectionSelected', (connId) => {
+    selectedConnection = connId;
+});
+
+editor.on('connectionUnselected', () => {
+    selectedConnection = null;
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+        // Don't trigger when typing in inputs
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (selectedConnection) {
+            editor.removeSingleConnection(
+                selectedConnection.output_id,
+                selectedConnection.input_id,
+                selectedConnection.output_class,
+                selectedConnection.input_class
+            );
+            selectedConnection = null;
+            updatePreview();
+            e.preventDefault();
+        }
     }
 });
 
-// ─── JSON Generation (graph traversal) ───
-function generateConfig() {
-    const data = editor.export().drawflow.Home.data;
-    const config = { version: 1, onAppStart: [] };
+// Listen for input changes inside nodes
+dfContainer.addEventListener('input', (e) => {
+    if (e.target.matches('.df-field input, .df-field select')) {
+        // Drawflow auto-syncs df-* attributes to data
+        updatePreview();
+    }
+});
 
-    // Find entry node(s)
-    for (const id in data) {
-        const node = data[id];
-        if (node.name === 'onAppStart') {
-            config.onAppStart = traverseFrom(data, id, 'output_1');
-        }
+// ─── JSON Generation ───
+function generateConfig() {
+    const data = editor.export();
+    const module = data.drawflow.Home.data;
+
+    // Build a graph: find entry node, traverse connections
+    let entryNodeId = null;
+    const nodes = {};
+
+    for (const [id, node] of Object.entries(module)) {
+        nodes[id] = node;
+        if (node.name === 'appStart') entryNodeId = id;
     }
 
-    return config;
+    if (!entryNodeId) return { version: 1, onAppStart: [] };
+
+    const actions = traverseFrom(entryNodeId, nodes, 'output_1');
+    return { version: 1, onAppStart: actions };
 }
 
-function traverseFrom(data, nodeId, outputName) {
-    const actions = [];
-    const node = data[nodeId];
-    if (!node) return actions;
+function traverseFrom(nodeId, nodes, outputKey) {
+    const node = nodes[nodeId];
+    if (!node) return [];
 
-    // Find connected nodes from this output
-    const connections = node.outputs[outputName]?.connections || [];
+    const actions = [];
+    // Get connections from this output
+    const connections = node.outputs[outputKey]?.connections || [];
 
     for (const conn of connections) {
-        const nextNode = data[conn.node];
-        if (!nextNode) continue;
+        const targetNode = nodes[conn.node];
+        if (!targetNode) continue;
 
-        const def = NODES[nextNode.name];
+        const def = NODE_DEFS[targetNode.name];
         if (!def) continue;
 
-        if (def.conditionType) {
-            // Condition node — branch
-            const condition = {
-                type: 'condition',
-                check: def.conditionType === 'custom' ? (nextNode.data.condTag || 'unknown') : def.conditionType,
-                then: traverseFrom(data, conn.node, 'output_1'),
-                else: traverseFrom(data, conn.node, 'output_2')
-            };
-            actions.push(condition);
-        } else if (def.actionType) {
-            // Action node
-            const action = { type: def.actionType };
-
-            if (def.actionType === 'setTags' && nextNode.data.tagKey) {
-                action.tags = { [nextNode.data.tagKey]: nextNode.data.tagValue || '' };
-            } else if (def.actionType === 'incrementTag') {
-                action.key = nextNode.data.tagKey || '';
-                action.value = Number(nextNode.data.value) || 1;
-            } else if (nextNode.data.value) {
-                action.value = nextNode.data.value;
+        if (def.category === 'condition') {
+            if (def.actionType === 'registerForPushNotifications') {
+                // registerPush is a single action with then/else branches
+                actions.push({
+                    type: 'registerForPushNotifications',
+                    then: traverseFrom(conn.node, nodes, 'output_1'),
+                    else: traverseFrom(conn.node, nodes, 'output_2')
+                });
+            } else {
+                const condAction = {
+                    type: 'condition',
+                    check: def.checkType === 'custom'
+                        ? (targetNode.data['condTag'] || 'unknown')
+                        : def.checkType,
+                    then: traverseFrom(conn.node, nodes, 'output_1'),
+                    else: traverseFrom(conn.node, nodes, 'output_2')
+                };
+                actions.push(condAction);
             }
+        } else if (def.category === 'action') {
+            const a = { type: def.actionType };
 
-            actions.push(action);
+            if (def.actionType === 'setTags' && targetNode.data.tagKey) {
+                a.key = targetNode.data.tagKey;
+                if (targetNode.data.source === 'nocode') {
+                    a.source = 'nocode';
+                } else if (targetNode.data.source && targetNode.data.source !== 'static') {
+                    a.source = targetNode.data.source;
+                } else {
+                    a.value = targetNode.data.tagValue || '';
+                }
+            } else if (def.actionType === 'incrementTag') {
+                a.key = targetNode.data.tagKey || '';
+                a.value = Number(targetNode.data.value) || 1;
+            } else if (def.actionType === 'setUser') {
+                if (targetNode.data.source === 'nocode') {
+                    a.source = 'nocode';
+                } else {
+                    a.value = targetNode.data.value || '';
+                    a.email = targetNode.data.email || '';
+                }
+            } else if (def.actionType === 'showPushNotificationAlert') {
+                a.value = targetNode.data.value === 'true';
+            } else if (def.actionType === 'sendBadges') {
+                a.value = Number(targetNode.data.value) || 0;
+            } else if (def.dynamic && targetNode.data.source === 'nocode') {
+                a.source = 'nocode';
+            } else if (def.dynamic && targetNode.data.source && targetNode.data.source !== 'static') {
+                a.source = targetNode.data.source;
+                a.key = targetNode.data.value || '';
+            } else if (targetNode.data.value) {
+                a.value = targetNode.data.value;
+            }
+            actions.push(a);
 
-            // Continue traversal from this node's output
-            const next = traverseFrom(data, conn.node, 'output_1');
-            actions.push(...next);
+            // Continue traversal
+            const nextActions = traverseFrom(conn.node, nodes, 'output_1');
+            actions.push(...nextActions);
         }
     }
-
     return actions;
 }
 
 // ─── Swift Generation ───
 function generateSwift(config) {
-    const lines = [
+    const L = [
         '// AppDelegate.swift',
-        '// Generated by Pushwoosh NoCode Builder',
-        '', 'import PushwooshFramework', '',
+        '// Generated by Pushwoosh NoCode Builder', '',
+        'import PushwooshFramework', '',
         'func application(_ application: UIApplication,',
         '    didFinishLaunchingWithOptions launchOptions:',
         '    [UIApplication.LaunchOptionsKey: Any]?) -> Bool {'
     ];
+    renderSwiftActions(config.onAppStart, L, '    ');
+    L.push('    return true', '}');
 
-    renderActions(config.onAppStart, lines, '    ');
-    lines.push('    return true');
-    lines.push('}');
-    return lines.join('\n');
+    // Check if nocode source is used
+    const usesNocode = JSON.stringify(config).includes('"nocode"');
+    if (usesNocode) {
+        L.push('', '// Pass dynamic values from your app:',
+            '// Pushwoosh.NoCode.set(.email, value: "john@gmail.com")',
+            '// Pushwoosh.NoCode.set(.userId, value: "user_123")');
+    }
+
+    return L.join('\n');
 }
 
-function renderActions(actions, lines, indent) {
+function renderSwiftActions(actions, L, ind) {
     for (const a of actions) {
         if (a.type === 'condition') {
-            lines.push(`${indent}// Check: ${a.check}`);
-            lines.push(`${indent}if ${a.check} {`);
-            renderActions(a.then, lines, indent + '    ');
-            lines.push(`${indent}} else {`);
-            renderActions(a.else, lines, indent + '    ');
-            lines.push(`${indent}}`);
-        } else {
-            const swift = actionToSwift(a);
-            if (swift) lines.push(indent + swift);
+            L.push(`${ind}// Check: ${a.check}`);
+            L.push(`${ind}if ${a.check} {`);
+            renderSwiftActions(a.then, L, ind + '    ');
+            L.push(`${ind}} else {`);
+            renderSwiftActions(a.else, L, ind + '    ');
+            L.push(`${ind}}`);
+            continue;
         }
+        if (a.source === 'nocode') {
+            if (a.type === 'setEmail') L.push(`${ind}// Email passed via: Pushwoosh.NoCode.set(.email, value: "...")`);
+            if (a.type === 'setUserId') L.push(`${ind}// User ID passed via: Pushwoosh.NoCode.set(.userId, value: "...")`);
+            if (a.type === 'setTags') L.push(`${ind}// Tag "${a.key}" passed via: Pushwoosh.NoCode.setTag("${a.key}", value: "...")`);
+            if (a.type === 'registerSmsNumber') L.push(`${ind}// SMS passed via: Pushwoosh.NoCode.set(.smsNumber, value: "...")`);
+            if (a.type === 'registerWhatsappNumber') L.push(`${ind}// WhatsApp passed via: Pushwoosh.NoCode.set(.whatsappNumber, value: "...")`);
+            if (a.type === 'setUser') L.push(`${ind}// User+Email passed via: Pushwoosh.NoCode.set(.userId/.email, value: "...")`);
+            continue;
+        }
+        if (a.source) {
+            const src = a.source === 'userDefaults'
+                ? `UserDefaults.standard.string(forKey: "${a.key}")` : `Bundle.main.infoDictionary?["${a.key}"] as? String`;
+            L.push(`${ind}if let v = ${src} { Pushwoosh.configure.${a.type}(v) }`);
+            continue;
+        }
+        const s = actionSwift(a);
+        if (s) L.push(ind + s);
     }
 }
 
-function actionToSwift(a) {
+function actionSwift(a) {
     switch (a.type) {
         case 'registerForPushNotifications': return 'Pushwoosh.configure.registerForPushNotifications()';
-        case 'setUserId': return `Pushwoosh.configure.setUserId("${a.value}")`;
-        case 'setEmail': return `Pushwoosh.configure.setEmail("${a.value}")`;
-        case 'setTags': {
-            const e = Object.entries(a.tags).map(([k,v]) => `"${k}": "${v}"`).join(', ');
-            return `Pushwoosh.configure.setTags([${e}])`;
-        }
-        case 'incrementTag':
-            return `Pushwoosh.configure.setTags(["${a.key}": PWTagsBuilder.incrementalTag(withInteger: ${a.value})])`;
-        case 'setLanguage': return `Pushwoosh.configure.setLanguage("${a.value}")`;
+        case 'setUserId': return `Pushwoosh.configure.setUserId("${a.value || ''}")`;
+        case 'setEmail': return `Pushwoosh.configure.setEmail("${a.value || ''}")`;
+        case 'setTags': { const e = Object.entries(a.tags||{}).map(([k,v])=>`"${k}":"${v}"`).join(','); return `Pushwoosh.configure.setTags([${e}])`; }
+        case 'incrementTag': return `Pushwoosh.configure.setTags(["${a.key}": PWTagsBuilder.incrementalTag(withInteger: ${a.value})])`;
+        case 'setLanguage': return `Pushwoosh.configure.setLanguage("${a.value || ''}")`;
         case 'startCommunication': return 'Pushwoosh.configure.startServerCommunication()';
         case 'stopCommunication': return 'Pushwoosh.configure.stopServerCommunication()';
-        case 'setReverseProxy': return `Pushwoosh.configure.setReverseProxy("${a.value}")`;
+        case 'setReverseProxy': return `Pushwoosh.configure.setReverseProxy("${a.value || ''}")`;
+        case 'sendBadges': return `Pushwoosh.configure.sendBadges(${a.value || 0})`;
+        case 'registerSmsNumber': return `Pushwoosh.configure.registerSmsNumber("${a.value || ''}")`;
+        case 'registerWhatsappNumber': return `Pushwoosh.configure.registerWhatsappNumber("${a.value || ''}")`;
+        case 'setUser': return `Pushwoosh.configure.setUser("${a.value || ''}", email: "${a.email || ''}")`;
+        case 'unregisterForPushNotifications': return 'Pushwoosh.configure.unregisterForPushNotifications()';
         default: return null;
     }
 }
 
+// ─── Guide Generation ───
+function generateGuideHTML() {
+    const config = generateConfig();
+    let html = '<div class="guide">';
+    html += '<div class="guide-title">Flow</div>';
+    html += renderGuideNode('On App Start', 'var(--green)', 'START');
+    if (config.onAppStart.length > 0) {
+        html += '<div class="guide-arrow">↓</div>';
+        html += renderGuideActions(config.onAppStart);
+    }
+
+    const points = collectIntegrationPoints(config.onAppStart);
+    if (points.length > 0) {
+        html += '<div class="guide-section">Your Code</div>';
+        html += '<div class="guide-note">Add in your app:</div>';
+        points.forEach(p => {
+            html += `<div class="guide-integration">${escapeGuide(p)}</div>`;
+        });
+    }
+
+    if (config.onAppStart.length === 0) {
+        html += '<div class="guide-empty">No actions configured</div>';
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function renderGuideActions(actions) {
+    let html = '';
+    for (let i = 0; i < actions.length; i++) {
+        const a = actions[i];
+        if (a.type === 'registerForPushNotifications') {
+            html += renderGuideNode('Register for Push', 'var(--blue)', 'CONDITION');
+            html += '<div style="display:flex;gap:6px;margin:3px 0;">';
+            html += '<div class="guide-branch" style="flex:1;border-left-color:var(--green2);">';
+            html += '<div class="guide-branch-label allowed">Allowed</div>';
+            html += a.then && a.then.length ? renderGuideActions(a.then) : '<div class="guide-empty">—</div>';
+            html += '</div>';
+            html += '<div class="guide-branch" style="flex:1;border-left-color:var(--red);">';
+            html += '<div class="guide-branch-label denied">Denied</div>';
+            html += a.else && a.else.length ? renderGuideActions(a.else) : '<div class="guide-empty">—</div>';
+            html += '</div></div>';
+        } else if (a.type === 'condition') {
+            html += renderGuideNode('Check: ' + (a.check || '?'), 'var(--yellow)', 'CONDITION');
+            html += '<div style="display:flex;gap:6px;margin:3px 0;">';
+            html += '<div class="guide-branch" style="flex:1;border-left-color:var(--green2);">';
+            html += '<div class="guide-branch-label allowed">True</div>';
+            html += a.then && a.then.length ? renderGuideActions(a.then) : '<div class="guide-empty">—</div>';
+            html += '</div>';
+            html += '<div class="guide-branch" style="flex:1;border-left-color:var(--red);">';
+            html += '<div class="guide-branch-label denied">False</div>';
+            html += a.else && a.else.length ? renderGuideActions(a.else) : '<div class="guide-empty">—</div>';
+            html += '</div></div>';
+        } else {
+            const label = guideActionLabel(a);
+            const color = guideActionColor(a);
+            html += renderGuideNode(label, color, 'ACTION');
+            if (a.source === 'nocode') {
+                const hint = nocodeHint(a);
+                if (hint) html += `<div class="guide-code-hint">${escapeGuide(hint)}</div>`;
+            }
+            if (i < actions.length - 1) html += '<div class="guide-arrow">↓</div>';
+        }
+    }
+    return html;
+}
+
+function renderGuideNode(title, color, type) {
+    return `<div class="guide-node"><div class="guide-node-head"><div class="guide-dot" style="background:${color}"></div>${escapeGuide(title)}<span class="guide-type">${type}</span></div></div>`;
+}
+
+function guideActionLabel(a) {
+    const map = {
+        'setEmail': 'Set Email', 'setUserId': 'Set User ID',
+        'setTags': 'Set Tag: ' + (a.key || '?'), 'incrementTag': 'Increment: ' + (a.key || '?'),
+        'setLanguage': 'Language: ' + (a.value || '?'), 'startCommunication': 'Start Communication',
+        'stopCommunication': 'Stop Communication', 'setReverseProxy': 'Reverse Proxy',
+        'sendBadges': 'Badge: ' + (a.value || 0), 'registerSmsNumber': 'Register SMS',
+        'registerWhatsappNumber': 'Register WhatsApp', 'setUser': 'Set User + Email',
+        'unregisterForPushNotifications': 'Unregister Push'
+    };
+    let label = map[a.type] || a.type;
+    if (a.source === 'nocode') label += ' (from app)';
+    else if (a.source) label += ' (' + a.source + ')';
+    else if (a.value !== undefined && typeof a.value === 'string' && !map[a.type]?.includes(a.value)) label += ': ' + a.value;
+    return label;
+}
+
+function guideActionColor(a) {
+    const map = {
+        'setEmail':'var(--purple)','setUserId':'var(--purple)','setTags':'var(--orange)',
+        'incrementTag':'var(--orange)','setLanguage':'var(--teal)','startCommunication':'var(--pink)',
+        'stopCommunication':'var(--pink)','setReverseProxy':'var(--red)','sendBadges':'var(--teal)',
+        'registerSmsNumber':'var(--purple)','registerWhatsappNumber':'var(--purple)',
+        'setUser':'var(--purple)','unregisterForPushNotifications':'var(--red)'
+    };
+    return map[a.type] || 'var(--text3)';
+}
+
+function nocodeHint(a) {
+    const map = {
+        'setEmail': 'Pushwoosh.NoCode.set(.email, value: "...")',
+        'setUserId': 'Pushwoosh.NoCode.set(.userId, value: "...")',
+        'setTags': 'Pushwoosh.NoCode.setTag("' + (a.key || '?') + '", value: "...")',
+        'registerSmsNumber': 'Pushwoosh.NoCode.set(.smsNumber, value: "...")',
+        'registerWhatsappNumber': 'Pushwoosh.NoCode.set(.whatsappNumber, value: "...")',
+        'setUser': 'Pushwoosh.NoCode.set(.userId, value: "...")\nPushwoosh.NoCode.set(.email, value: "...")'
+    };
+    return map[a.type] || '';
+}
+
+function collectIntegrationPoints(actions) {
+    const points = [];
+    for (const a of actions) {
+        if (a.source === 'nocode') {
+            const hint = nocodeHint(a);
+            if (hint && !points.includes(hint)) points.push(hint);
+        }
+        if (a.then) collectIntegrationPoints(a.then).forEach(p => { if (!points.includes(p)) points.push(p); });
+        if (a.else) collectIntegrationPoints(a.else).forEach(p => { if (!points.includes(p)) points.push(p); });
+    }
+    return points;
+}
+
+function escapeGuide(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function buildGuideHTML(guideContent, swiftCode, jsonCode) {
+    var NL = '\n';
+    var Q = "'";
+
+    var css = [
+        '@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Sora:wght@300;400;600;700&display=swap");',
+        ':root{',
+        '  --bg:#06090f;--bg2:#0c1018;--bg3:#121826;--surface:#161d2e;',
+        '  --border:rgba(0,212,255,0.08);--border2:rgba(0,212,255,0.15);',
+        '  --text:#c8d6e5;--text2:#5c6b7f;--text3:#2d3748;',
+        '  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.12);--cyan-glow:rgba(0,212,255,0.25);',
+        '  --emerald:#00e676;--emerald-dim:rgba(0,230,118,0.1);',
+        '  --coral:#ff6b6b;--coral-dim:rgba(255,107,107,0.1);',
+        '  --amber:#ffb74d;--amber-dim:rgba(255,183,77,0.1);',
+        '  --violet:#b388ff;--violet-dim:rgba(179,136,255,0.1);',
+        '  --pink:#ff80ab;--pink-dim:rgba(255,128,171,0.1);',
+        '  --radius:10px;',
+        '}',
+        '*{margin:0;padding:0;box-sizing:border-box}',
+        'body{font-family:"Sora",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;background-image:radial-gradient(circle at 1px 1px,rgba(0,212,255,0.03) 1px,transparent 0);background-size:32px 32px;}',
+        '.page{max-width:680px;margin:0 auto;padding:60px 32px 80px;}',
+        '.hero{margin-bottom:48px;position:relative;}',
+        '.hero::before{content:"";position:absolute;top:-30px;left:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none;}',
+        '.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;background:var(--cyan-dim);color:var(--cyan);border:1px solid var(--border2);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px;font-family:"IBM Plex Mono",monospace;}',
+        '.hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}',
+        '.hero h1{font-size:36px;font-weight:700;letter-spacing:-1.2px;line-height:1.15;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}',
+        '.hero-sub{font-size:14px;color:var(--text2);line-height:1.6;font-weight:300;}',
+        '.sect{margin-bottom:40px;}',
+        '.sect-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text2);font-family:"IBM Plex Mono",monospace;}',
+        '.sect-head::before{content:"";flex:0 0 20px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent);}',
+        '.sect-head::after{content:"";flex:1;height:1px;background:var(--border);}',
+        '.guide{font-size:13px;line-height:1.6;font-family:"IBM Plex Mono",monospace;}',
+        '.guide-title{display:none;}',
+        '.guide-node{margin:6px 0;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);position:relative;transition:border-color 0.2s,box-shadow 0.2s;}',
+        '.guide-node:hover{border-color:rgba(0,212,255,0.3);box-shadow:0 0 20px rgba(0,212,255,0.05);}',
+        '.guide-node-head{display:flex;align-items:center;gap:10px;font-weight:600;font-size:12px;}',
+        '.guide-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;box-shadow:0 0 8px currentColor;}',
+        '.guide-type{font-size:9px;color:var(--text3);font-weight:600;margin-left:auto;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,0.03);letter-spacing:0.8px;}',
+        '.guide-arrow{text-align:center;color:var(--cyan);font-size:14px;padding:2px 0;opacity:0.4;}',
+        '.guide-branch{margin-left:8px;padding-left:16px;border-left:2px dashed var(--border2);margin-top:4px;margin-bottom:4px;}',
+        '.guide-branch-label{font-size:10px;font-weight:700;padding:5px 0 3px;letter-spacing:0.5px;text-transform:uppercase;}',
+        '.guide-branch-label.allowed{color:var(--emerald);}',
+        '.guide-branch-label.denied{color:var(--coral);}',
+        '.guide-code-hint{margin:6px 0 6px 12px;padding:8px 12px;background:var(--cyan-dim);border:1px solid var(--border2);border-radius:8px;font-size:11px;color:var(--cyan);word-break:break-all;line-height:1.5;border-left:3px solid var(--cyan);}',
+        '.guide-section{margin-top:20px;padding-top:14px;border-top:1px dashed var(--border2);font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;}',
+        '.guide-integration{padding:8px 12px;margin:6px 0;background:var(--emerald-dim);border:1px solid rgba(0,230,118,0.12);border-left:3px solid var(--emerald);border-radius:8px;font-size:11px;line-height:1.5;color:var(--emerald);white-space:pre-wrap;}',
+        '.guide-note{font-size:12px;color:var(--text2);margin:6px 0;line-height:1.5;}',
+        '.guide-empty{color:var(--text3);font-size:11px;font-style:italic;padding:4px 0;}',
+        '.steps{display:flex;flex-direction:column;gap:0;position:relative;}',
+        '.steps::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:1px;background:linear-gradient(180deg,var(--cyan),var(--border2),var(--cyan));}',
+        '.step{display:flex;align-items:flex-start;gap:16px;padding:14px 0;position:relative;}',
+        '.step-num{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--bg3);border:2px solid var(--border2);color:var(--cyan);font-size:14px;font-weight:700;font-family:"IBM Plex Mono",monospace;position:relative;z-index:1;}',
+        '.step-body{padding-top:8px;}',
+        '.step-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}',
+        '.step-desc{font-size:12px;color:var(--text2);line-height:1.5;}',
+        '.badge{display:inline-block;padding:2px 8px;border-radius:4px;background:var(--cyan-dim);border:1px solid var(--border2);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--cyan);font-weight:500;}',
+        '.code-tabs{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1;}',
+        '.code-tab{padding:8px 18px;border:1px solid transparent;border-bottom:none;border-radius:var(--radius) var(--radius) 0 0;background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;font-family:"IBM Plex Mono",monospace;transition:all 0.15s;}',
+        '.code-tab:hover{color:var(--text);}',
+        '.code-tab.active{background:var(--bg3);color:var(--cyan);border-color:var(--border2);}',
+        '.code-block{background:var(--bg3);border:1px solid var(--border2);border-radius:0 var(--radius) var(--radius) var(--radius);padding:20px;margin:0;font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.7;white-space:pre-wrap;word-break:break-word;color:var(--text);overflow-x:auto;position:relative;}',
+        '.code-block::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0.3;}',
+        '.foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--text3);font-family:"IBM Plex Mono",monospace;}',
+        '.foot-logo{display:flex;align-items:center;gap:8px;color:var(--text2);}',
+        '.foot-logo span{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--cyan),#0091d5);font-size:11px;font-weight:700;color:white;}',
+        '@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}',
+        '.hero{animation:fadeUp 0.5s ease both;}',
+        '.sect:nth-child(2){animation:fadeUp 0.5s ease 0.1s both;}',
+        '.sect:nth-child(3){animation:fadeUp 0.5s ease 0.2s both;}',
+        '.sect:nth-child(4){animation:fadeUp 0.5s ease 0.3s both;}',
+        '.foot{animation:fadeUp 0.5s ease 0.4s both;}'
+    ].join('\n');
+
+    var tabClick = 'this.parentElement.querySelectorAll(' + Q + '.code-tab' + Q + ').forEach(function(b){b.classList.remove(' + Q + 'active' + Q + ')});this.classList.add(' + Q + 'active' + Q + ');';
+    var swiftClick = tabClick + 'this.parentElement.nextElementSibling.style.display=' + Q + 'block' + Q + ';this.parentElement.nextElementSibling.nextElementSibling.style.display=' + Q + 'none' + Q + ';';
+    var jsonClick = tabClick + 'this.parentElement.nextElementSibling.style.display=' + Q + 'none' + Q + ';this.parentElement.nextElementSibling.nextElementSibling.style.display=' + Q + 'block' + Q + ';';
+
+    var dateStr = new Date().toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'});
+
+    var parts = [
+        '<!DOCTYPE html>',
+        '<html lang="en">',
+        '<head>',
+        '<meta charset="UTF-8">',
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+        '<title>Pushwoosh NoCode \u2014 Developer Guide</title>',
+        '<style>' + css + '</style>',
+        '</head>',
+        '<body>',
+        '<div class="page">',
+        '<div class="hero">',
+        '  <div class="hero-badge">Integration Guide</div>',
+        '  <h1>NoCode SDK<br>Setup Guide</h1>',
+        '  <p class="hero-sub">Auto-generated from your NoCode Builder flow.<br>Follow the steps below to integrate.</p>',
+        '</div>',
+        '<div class="sect">',
+        '  <div class="sect-head">Execution Flow</div>',
+        '  ' + guideContent,
+        '</div>',
+        '<div class="sect">',
+        '  <div class="sect-head">Integration Steps</div>',
+        '  <div class="steps">',
+        '    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Add config to bundle</div><div class="step-desc">Drag <span class="badge">pushwoosh-nocode.json</span> into your Xcode project</div></div></div>',
+        '    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Link NoCode module</div><div class="step-desc">Add <span class="badge">PushwooshNoCode</span> via SPM or CocoaPods</div></div></div>',
+        '    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Pass dynamic values</div><div class="step-desc">Call <span class="badge">Pushwoosh.NoCode.set()</span> from your app where needed</div></div></div>',
+        '  </div>',
+        '</div>',
+        '<div class="sect">',
+        '  <div class="sect-head">Generated Code</div>',
+        '  <div class="code-tabs">',
+        '    <button class="code-tab active" onclick="' + swiftClick + '">Swift</button>',
+        '    <button class="code-tab" onclick="' + jsonClick + '">JSON</button>',
+        '  </div>',
+        '  <pre class="code-block" style="display:block;">' + escapeGuide(swiftCode) + '</pre>',
+        '  <pre class="code-block" style="display:none;border-radius:var(--radius);">' + escapeGuide(jsonCode) + '</pre>',
+        '</div>',
+        '<div class="foot">',
+        '  <div class="foot-logo"><span>P</span>Pushwoosh NoCode</div>',
+        '  <div>' + dateStr + '</div>',
+        '</div>',
+        '</div>',
+        '</body>',
+        '</html>'
+    ];
+
+    return parts.join('\n');
+}
+
+function exportGuide() {
+    const config = generateConfig();
+    const guideContent = generateGuideHTML();
+    const swiftCode = generateSwift(config);
+    const jsonCode = JSON.stringify(config, null, 2);
+
+    const html = buildGuideHTML(guideContent, swiftCode, jsonCode);
+
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = 'pushwoosh-nocode-guide.html';
+    a.click();
+    showToast('Guide exported!');
+}
+
 // ─── Preview ───
-let currentTab = 'json';
+let curTab = 'json';
 
 function updatePreview() {
-    const config = generateConfig();
-    const el = document.getElementById('previewOutput');
-    el.textContent = currentTab === 'json'
-        ? JSON.stringify(config, null, 2)
-        : generateSwift(config);
+    const c = generateConfig();
+    if (curTab === 'guide') {
+        document.getElementById('guideOutput').innerHTML = generateGuideHTML();
+    } else {
+        document.getElementById('output').textContent = curTab === 'json'
+            ? JSON.stringify(c, null, 2) : generateSwift(c);
+    }
 }
 
 function switchTab(tab, btn) {
-    currentTab = tab;
-    document.querySelectorAll('.preview-tab').forEach(b => b.classList.remove('active'));
+    curTab = tab;
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    updatePreview();
+    if (tab === 'guide') {
+        document.getElementById('output').style.display = 'none';
+        document.getElementById('guideOutput').style.display = 'block';
+        document.getElementById('guideOutput').innerHTML = generateGuideHTML();
+    } else {
+        document.getElementById('output').style.display = 'block';
+        document.getElementById('guideOutput').style.display = 'none';
+        updatePreview();
+    }
 }
 
-// ─── Actions ───
 function copyCode() {
-    navigator.clipboard.writeText(document.getElementById('previewOutput').textContent)
-        .then(() => showToast('Copied to clipboard'));
+    navigator.clipboard.writeText(document.getElementById('output').textContent)
+        .then(() => showToast('Copied!'));
 }
 
 function downloadJSON() {
-    const json = JSON.stringify(generateConfig(), null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    const j = JSON.stringify(generateConfig(), null, 2);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = URL.createObjectURL(new Blob([j], { type: 'application/json' }));
     a.download = 'pushwoosh-nocode.json';
     a.click();
-    URL.revokeObjectURL(url);
-    showToast('Downloaded pushwoosh-nocode.json');
+    showToast('Downloaded!');
 }
 
 function clearCanvas() {
     editor.clear();
-    const data = {};
-    editor.addNode('onAppStart', 0, 1, 100, 200, 'start', data, buildNodeHTML('onAppStart'));
+    // Re-add entry node
+    editor.addNode('appStart', 0, 1, 80, 200, 'entry', {}, buildNodeHTML('appStart', NODE_DEFS.appStart));
     updatePreview();
-    showToast('Canvas cleared');
+    showToast('Cleared');
 }
 
-function showToast(msg) {
+function showToast(m) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
+    t.textContent = m; t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// Initial preview
-updatePreview();
-</script>
+// ─── Push Payload Modal ───
+function showPushPayload() {
+    const config = generateConfig();
+    const payload = {
+        request: {
+            application: "YOUR_APP_CODE",
+            auth: "YOUR_API_TOKEN",
+            notifications: [{
+                send_date: "now",
+                content: { en: "" },
+                platforms: [1, 3],
+                silent: true,
+                data: {
+                    pw_nocode_config: config
+                }
+            }]
+        }
+    };
+    document.getElementById('pushPayload').textContent = JSON.stringify(payload, null, 2);
+    document.getElementById('pushModal').style.display = 'flex';
+}
 
+function closePushModal() {
+    document.getElementById('pushModal').style.display = 'none';
+}
+
+function copyPushPayload() {
+    navigator.clipboard.writeText(document.getElementById('pushPayload').textContent)
+        .then(() => showToast('Payload copied!'));
+    closePushModal();
+}
+
+function copyCurl() {
+    const config = generateConfig();
+    const body = JSON.stringify({
+        request: {
+            application: "YOUR_APP_CODE",
+            auth: "YOUR_API_TOKEN",
+            notifications: [{
+                send_date: "now",
+                content: { en: "" },
+                platforms: [1, 3],
+                silent: true,
+                data: { pw_nocode_config: config }
+            }]
+        }
+    });
+    const curl = `curl -X POST https://api.pushwoosh.com/json/1.3/createMessage \\
+  -H "Content-Type: application/json" \\
+  -d '${body}'`;
+    navigator.clipboard.writeText(curl)
+        .then(() => showToast('cURL copied!'));
+    closePushModal();
+}
+
+document.getElementById('pushModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closePushModal();
+});
+
+// ─── Init ───
+buildPalette();
+updatePreview();
+
+// Add a default registerPush node (now a condition with 2 outputs) connected to entry
+setTimeout(() => {
+    const regId = editor.addNode('registerPush', 1, 2, 80, 400, 'condition', {},
+        buildNodeHTML('registerPush', NODE_DEFS.registerPush));
+    editor.addConnection(entryId, regId, 'output_1', 'input_1');
+    updatePreview();
+}, 100);
+</script>
 </body>
 </html>
